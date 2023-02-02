@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import logo from '../assets/diulogo_white.png';
 
 const navigation = [
     { name: 'Solutions', href: '#' },
-    { name: 'Pricing', href: '#' },
-    { name: 'Docs', href: '#' },
-    { name: 'Company', href: '#' },
+    { name: 'Pricing', href: '/price' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
 ];
 
 export default function Example() {
@@ -16,23 +17,17 @@ export default function Example() {
                     <div className="flex items-center">
                         <a href="#">
                             <span className="sr-only">InventoryGenie</span>
-                            <img className="h-10 w-auto" src={logo} alt="" />
+                            <Link to="/"><img className="h-10 w-auto" src={logo} alt="" /></Link>
                         </a>
                         <div className="ml-10 hidden space-x-8 lg:block">
                             {navigation.map((link) => (
-                                <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
-                                    {link.name}
-                                </a>
+                                <Link to={link.href} className="text-base font-medium text-white hover:text-indigo-50">{link.name} </Link>
                             ))}
                         </div>
                     </div>
                     <div className="ml-10 space-x-4">
-                        <a
-                            href="#"
-                            className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75"
-                        >
-                            Sign in
-                        </a>
+
+                        <Link to="/signin" className="inline-block rounded-md border border-transparent bg-indigo-500 py-2 px-4 text-base font-medium text-white hover:bg-opacity-75">Sign in</Link>
                         <a
                             href="#"
                             className="inline-block rounded-md border border-transparent bg-white py-2 px-4 text-base font-medium text-indigo-600 hover:bg-indigo-50"
