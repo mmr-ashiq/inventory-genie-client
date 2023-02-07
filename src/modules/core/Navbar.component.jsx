@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import logo from '../assets/diulogo_white.png';
+import logo from '../../assets/diulogo_white.png';
 
 const navigation = [
     { name: 'Solutions', href: '#' },
@@ -15,13 +15,11 @@ export default function Example() {
             <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
                 <div className="flex w-full items-center justify-between border-b border-indigo-500 py-6 lg:border-none">
                     <div className="flex items-center">
-                        <a href="#">
-                            <span className="sr-only">InventoryGenie</span>
-                            <Link to="/"><img className="h-10 w-auto" src={logo} alt="" /></Link>
-                        </a>
+                        <span className="sr-only">InventoryGenie</span>
+                        <Link to="/"><img className="h-10 w-auto" src={logo} alt="" /></Link>
                         <div className="ml-10 hidden space-x-8 lg:block">
                             {navigation.map((link) => (
-                                <Link to={link.href} className="text-base font-medium text-white hover:text-indigo-50">{link.name} </Link>
+                                <Link to={link.href} key={link.name} className="text-base font-medium text-white hover:text-indigo-50">{link.name} </Link>
                             ))}
                         </div>
                     </div>
@@ -35,13 +33,6 @@ export default function Example() {
                             Sign up
                         </a>
                     </div>
-                </div>
-                <div className="flex flex-wrap justify-center space-x-6 py-4 lg:hidden">
-                    {navigation.map((link) => (
-                        <a key={link.name} href={link.href} className="text-base font-medium text-white hover:text-indigo-50">
-                            {link.name}
-                        </a>
-                    ))}
                 </div>
             </nav>
         </header>

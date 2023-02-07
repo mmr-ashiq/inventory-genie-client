@@ -1,5 +1,5 @@
 import React from 'react';
-import supervisorImage from '../assets/supervisor.jpg';
+import supervisorImage from '../../assets/supervisor.jpg';
 
 const people = [
     {

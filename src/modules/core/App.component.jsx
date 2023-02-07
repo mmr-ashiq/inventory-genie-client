@@ -1,22 +1,22 @@
 import React from 'react';
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import About from './About';
-import Contact from './Contact';
-import Error from './Error';
-import Footer from './Footer';
-import Home from './Home';
-import Navbar from './Navbar';
-import Pricing from './Pricing';
-import SignIn from './SignIn';
+import About from './About.component';
+import Contact from './Contact.component';
+import Error from './Error.component';
+import Footer from './Footer.component';
+import Home from './Home.component';
+import Navbar from './Navbar.component';
+import Pricing from './Pricing.component';
+import SignIn from './SignIn.component';
 
 function App() {
-  return (
-    <>
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Navbar />
+            <Outlet />
+            <Footer />
+        </>
+    );
 }
 
 const appRouter = createBrowserRouter([
