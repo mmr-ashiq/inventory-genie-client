@@ -1,13 +1,17 @@
 import React from "react";
-import { createBrowserRouter, Outlet } from "react-router-dom";
-import About from "./About.component";
-import Contact from "./Contact.component";
-import Error from "./Error.component";
+import { BrowserRouter, createBrowserRouter } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+
+import Navbar from "./Navbar.component";
 import Footer from "./Footer.component";
 import Home from "./Home.component";
-import Navbar from "./Navbar.component";
+import About from "./About.component";
+import Contact from "./Contact.component";
 import Pricing from "./Pricing.component";
 import SignIn from "./SignIn.component";
+import Error from "./Error.component";
+import ManagerDashboard from "../manger/manager.dashboard";
 
 function App() {
     return (
@@ -44,6 +48,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/signin",
                 element: <SignIn />,
+            },
+            {
+                path: "/manager-dashboard",
+                element: <ManagerDashboard />,
             },
         ],
     },

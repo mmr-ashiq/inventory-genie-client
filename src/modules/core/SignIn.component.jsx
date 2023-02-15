@@ -1,6 +1,38 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
-const SignIn = () => {
+import { isLoggedInApi, loginApi } from "../../apis/auth.apis";
+
+export default function SignIn() {
+    const navigate = useNavigate();
+
+    const { data, isLoading, error } = useQuery(["isLoggedIn"], isLoggedInApi, {
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+
+    const [loginData, setLoginData] = useState({
+        email: "",
+        password: "",
+    });
+
+    const handleLogin = async () => {
+        const response = await loginApi(loginData);
+
+        if (response.status === 200) {
+            toast.success("Login successful!");
+            navigate("/manager-dashboard");
+        }
+
+        console.log(response);
+    };
+
+    const handleChange = (e) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    };
+
     return (
         <>
             <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -26,7 +58,7 @@ const SignIn = () => {
 
                 <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                     <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                        <form className="space-y-6" action="#" method="POST">
+                        <form className="space-y-6" method="POST">
                             <div>
                                 <label
                                     htmlFor="email"
@@ -42,6 +74,8 @@ const SignIn = () => {
                                         autoComplete="email"
                                         required
                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        value={loginData.email}
+                                        onChange={handleChange}
                                     />
                                 </div>
                             </div>
@@ -61,6 +95,8 @@ const SignIn = () => {
                                         autoComplete="current-password"
                                         required
                                         className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                        value={loginData.password}
+                                        onChange={handleChange}
                                     />
                                 </div>
                             </div>
@@ -95,6 +131,7 @@ const SignIn = () => {
                                 <button
                                     type="submit"
                                     className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    onClick={handleLogin}
                                 >
                                     Sign in
                                 </button>
@@ -103,8 +140,8 @@ const SignIn = () => {
                     </div>
                 </div>
             </div>
+
+            <ToastContainer />
         </>
     );
-};
-
-export default SignIn;
+}
