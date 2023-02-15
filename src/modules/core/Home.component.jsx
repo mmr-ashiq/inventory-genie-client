@@ -1,5 +1,5 @@
-import React from 'react';
-import Pricing from './Pricing.component';
+import React from "react";
+import Pricing from "./Pricing.component";
 
 function Home() {
     return (
