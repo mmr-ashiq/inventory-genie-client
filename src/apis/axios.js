@@ -1,5 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
 export const API_CLIENT = axios.create({
-    baseURL: "http://localhost:5000",
-    withCredentials: true,
+  baseURL: 'http://localhost:5000',
+  withCredentials: true
 });
