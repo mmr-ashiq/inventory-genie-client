@@ -1,9 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginApi } from '../apis/auth.apis';
-import { toast, ToastContainer } from 'react-toastify';
-
+import { ToastContainer, toast } from 'react-toastify';
+import { loginApi } from '../../apis/auth.apis';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
@@ -29,7 +28,10 @@ const SignIn = () => {
 
 			navigator('/');
 		} catch (error) {
-			console.log(error);
+			toast.error('Invalid credentials', {
+				theme: 'colored',
+				autoClose: 2000,
+			});
 		}
 	};
 

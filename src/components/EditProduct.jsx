@@ -30,14 +30,14 @@ export const EditProduct = ({ productId }) => {
 	};
 
 	return (
-		<div className="max-w-md mx-auto my-4 bg-white p-6 rounded-md shadow-md">
-			<h1 className="text-2xl font-bold mb-4">Edit Product</h1>
+		<div className="max-w-md p-6 mx-auto my-4 bg-white rounded-md shadow-md">
+			<h1 className="mb-4 text-2xl font-bold text-center">Edit Product</h1>
 
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
 					<label
 						htmlFor="name"
-						className="block font-semibold text-gray-700 mb-2"
+						className="block mb-2 font-semibold text-gray-700"
 					>
 						Name
 					</label>
@@ -46,13 +46,13 @@ export const EditProduct = ({ productId }) => {
 						name="name"
 						id="name"
 						defaultValue={product.name}
-						className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 				<div>
 					<label
 						htmlFor="price"
-						className="block font-semibold text-gray-700 mb-2"
+						className="block mb-2 font-semibold text-gray-700"
 					>
 						Price
 					</label>
@@ -61,13 +61,13 @@ export const EditProduct = ({ productId }) => {
 						name="price"
 						id="price"
 						defaultValue={product.price}
-						className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 				<div>
 					<label
 						htmlFor="description"
-						className="block font-semibold text-gray-700 mb-2"
+						className="block mb-2 font-semibold text-gray-700"
 					>
 						Description
 					</label>
@@ -76,13 +76,13 @@ export const EditProduct = ({ productId }) => {
 						name="description"
 						id="description"
 						defaultValue={product.description}
-						className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 				<div>
 					<label
 						htmlFor="stock"
-						className="block font-semibold text-gray-700 mb-2"
+						className="block mb-2 font-semibold text-gray-700"
 					>
 						Stock
 					</label>
@@ -91,13 +91,13 @@ export const EditProduct = ({ productId }) => {
 						name="stock"
 						id="stock"
 						defaultValue={product.stock}
-						className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 				<div>
 					<label
 						htmlFor="discount"
-						className="block font-semibold text-gray-700 mb-2"
+						className="block mb-2 font-semibold text-gray-700"
 					>
 						Discount
 					</label>
@@ -106,14 +106,14 @@ export const EditProduct = ({ productId }) => {
 						name="discount"
 						id="discount"
 						defaultValue={product.discount}
-						className="border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
 
 				<div>
 					<Button
 						type="submit"
-						className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+						className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline"
 					>
 						Update
 					</Button>
