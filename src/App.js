@@ -17,6 +17,7 @@ import NotFound from './components/NotFound';
 import ProductDetails from './components/ProductDetails';
 import ProductOverview from './components/ProductOverview';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 // import { useIsLoggedIn } from './hooks/useIsLoggedIn';
 import { CartProvider } from './context/products.context';
 
@@ -34,6 +35,7 @@ export default function App() {
 						<Route path="/price" element={<Pricing />} />
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/login" element={<SignIn />} />
+						<Route path="/signup" element={<SignUp />} />
 						<Route path="/productDetails" element={<ProductDetails />} />
 						<Route path="/orderHistory" element={<OrderHistory />} />
 						<Route path="/dashboard" element={<Dashboard />} />

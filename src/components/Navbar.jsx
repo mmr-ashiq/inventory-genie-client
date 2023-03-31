@@ -1,9 +1,14 @@
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../assets/diulogo_white.png';
+import { toast, ToastContainer } from 'react-toastify';
 import { logoutApi } from '../apis/auth.apis';
-import { useQueryClient } from '@tanstack/react-query';
+import logo from '../assets/diulogo_white.png';
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+
+import 'react-toastify/dist/ReactToastify.css';
+
+import { UserIcon } from '@heroicons/react/24/solid';
 
 const navigation = [
 	{ name: 'Solutions', href: '#' },
@@ -17,12 +22,22 @@ export default function Example() {
 
 	const { data } = useIsLoggedIn();
 
+	const logInToast = () =>
+		toast.success('You have successfully signed in!', {
+			theme: 'colored',
+			autoClose: 2000,
+		});
+	const logOutToast = () =>
+		toast.success('You have successfully signed out!', {
+			theme: 'colored',
+			autoClose: 2000,
+		});
+
 	return (
 		<header className="bg-indigo-600">
 			<nav className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8" aria-label="Top">
 				<div className="flex items-center justify-between w-full py-6 border-b border-indigo-500 lg:border-none">
 					<div className="flex items-center">
-						<span className="sr-only">InventoryGenie</span>
 						<Link to="/">
 							<img className="w-auto h-10" src={logo} alt="" />
 						</Link>
@@ -37,18 +52,26 @@ export default function Example() {
 								</Link>
 							))}
 						</div>
+						<button onClick={logInToast}>Notify !</button>
+						<ToastContainer />
 					</div>
-					<div className="ml-10 space-x-4">
+					<div className="flex items-center ml-10 space-x-4">
 						{data?.isLoggedIn ? (
 							<>
+								<ToastContainer />
+								<span className="flex items-center">
+									<UserIcon className="w-6 h-6" />
+									<span className="ml-2">
+										{data.userData?.fullName || 'User'}
+									</span>
+								</span>
 								<button
 									className="inline-block px-4 py-2 text-base font-medium text-white bg-indigo-500 border border-transparent rounded-md hover:bg-opacity-75"
 									onClick={async () => {
+										logOutToast();
 										await logoutApi();
 
-										// queryClient.invalidateQueries({ queryKey: ["isLoggedIn"] });
-										// queryClient.removeQueries("isLoggedIn");
-										queryClient.resetQueries({
+										await queryClient.resetQueries({
 											queryKey: 'isLoggedIn',
 											exact: true,
 										});
@@ -56,8 +79,7 @@ export default function Example() {
 								>
 									Logout
 								</button>
-
-								<span>{data.userData?.fullName}</span>
+								<ToastContainer />
 							</>
 						) : (
 							<>
