@@ -177,7 +177,9 @@ export default function Example() {
 									<li>
 										<a
 											className="text-indigo-200 hover:text-indigo-100"
-											href="#"
+											href="https://www.facebook.com/mmr.ashiq/"
+											target='_blank'
+											rel='noreferrer'
 										>
 											<span className="sr-only">Facebook</span>
 											<AiFillFacebook size={30} />
@@ -186,7 +188,9 @@ export default function Example() {
 									<li>
 										<a
 											className="text-indigo-200 hover:text-indigo-100"
-											href="#"
+											href="https://github.com/mmr-ashiq"
+											target='_blank'
+											rel='noreferrer'
 										>
 											<span className="sr-only">GitHub</span>
 											<AiFillGithub size={30} />
@@ -195,7 +199,9 @@ export default function Example() {
 									<li>
 										<a
 											className="text-indigo-200 hover:text-indigo-100"
-											href="#"
+											href="https://twitter.com/mmr_ashiq"
+											target='_blank'
+											rel='noreferrer'
 										>
 											<span className="sr-only">Twitter</span>
 											<AiFillTwitterCircle size={30} />

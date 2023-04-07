@@ -19,8 +19,9 @@ import ProductOverview from './components/ProductOverview';
 import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
 import SignIn from './modules/core/SignIn';
-// import { useIsLoggedIn } from './hooks/useIsLoggedIn';
 import { CartProvider } from './context/products.context';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 	// const {} = useIsLoggedIn();
@@ -51,6 +52,7 @@ export default function App() {
 					<Footer />
 				</MantineProvider>
 			</CartProvider>
+			<ToastContainer />
 		</>
 	);
 }

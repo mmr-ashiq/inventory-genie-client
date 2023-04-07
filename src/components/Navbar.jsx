@@ -1,12 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { logoutApi } from '../apis/auth.apis';
 import logo from '../assets/diulogo_white.png';
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
 
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import { AiOutlineUser } from 'react-icons/ai';
 
@@ -31,7 +31,6 @@ export default function Example() {
 
 	return (
 		<>
-			<ToastContainer />
 			<header className="bg-indigo-600">
 				<nav
 					className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8"
