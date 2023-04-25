@@ -1,6 +1,8 @@
 import { MantineProvider } from '@mantine/core';
 import { Route, Routes } from 'react-router-dom';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Cart from '../src/components/Cart';
 import CheckOut from '../src/components/CheckOut';
 import Dashboard from '../src/components/Dashboard';
@@ -8,29 +10,27 @@ import OrderHistory from '../src/components/OrderHistory';
 import Products from '../src/components/Products';
 import About from '../src/modules/core/About';
 import Contact from '../src/modules/core/Contact';
-import Footer from '../src/modules/core/Footer';
 import Pricing from '../src/modules/core/Pricing';
 import { EditProduct } from './components/EditProduct';
 import HomePage from './components/HomePage';
+// import Test from './components/Test';
 import Navbar from './components/Navbar';
+import MyNavbar from './components/MyNavbar';
 import NotFound from './components/NotFound';
 import ProductDetails from './components/ProductDetails';
 import ProductOverview from './components/ProductOverview';
+import { CartProvider } from './context/products.context';
+import SignIn from './modules/core/SignIn';
 import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
-import SignIn from './modules/core/SignIn';
-import { CartProvider } from './context/products.context';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
-	// const {} = useIsLoggedIn();
-
 	return (
 		<>
 			<CartProvider>
 				<MantineProvider withGlobalStyles withNormalizeCSS>
 					<Navbar />
+					<MyNavbar />
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<About />} />
@@ -41,6 +41,8 @@ export default function App() {
 						<Route path="/productDetails" element={<ProductDetails />} />
 						<Route path="/orderHistory" element={<OrderHistory />} />
 						<Route path="/dashboard" element={<Dashboard />} />
+						<Route path="/MyNavbar" elemnet={<MyNavbar />} />
+						{/* <Route path="/test" element={<Test />} /> */}
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/checkout" element={<CheckOut />} />
 						<Route path="/products" element={<Products />} />
@@ -49,7 +51,7 @@ export default function App() {
 						<Route path="/solutions" element={<Solutions />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
-					<Footer />
+					{/* <Footer /> */}
 				</MantineProvider>
 			</CartProvider>
 			<ToastContainer />

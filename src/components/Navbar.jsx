@@ -59,7 +59,7 @@ export default function Example() {
 									<span className="flex items-center">
 										<AiOutlineUser className="w-6 h-6" />
 										<span className="ml-2 text-black transition-colors duration-500 cursor-pointer hover:text-indigo-50">
-											{data.userData?.fullName || 'User'}
+											{data.userData?.name || 'User'}
 										</span>
 									</span>
 
