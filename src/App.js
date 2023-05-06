@@ -17,6 +17,7 @@ import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
 import MyNavbar from './components/MyNavbar';
 import NotFound from './components/NotFound';
+import Profile from './modules/core/Profile';
 import ProductDetails from './components/ProductDetails';
 import ProductOverview from './components/ProductOverview';
 import { CartProvider } from './context/products.context';
@@ -30,7 +31,7 @@ export default function App() {
 			<CartProvider>
 				<MantineProvider withGlobalStyles withNormalizeCSS>
 					<Navbar />
-					<MyNavbar />
+					{/* <MyNavbar /> */}
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<About />} />
@@ -44,6 +45,7 @@ export default function App() {
 						<Route path="/MyNavbar" elemnet={<MyNavbar />} />
 						{/* <Route path="/test" element={<Test />} /> */}
 						<Route path="/cart" element={<Cart />} />
+						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
 						<Route path="/products" element={<Products />} />
 						<Route path="/productOverview" element={<ProductOverview />} />
