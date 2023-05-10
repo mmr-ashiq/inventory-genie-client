@@ -23,6 +23,7 @@ import { CartProvider } from './context/products.context';
 import SignIn from './modules/core/SignIn';
 import SignUp from './modules/core/SignUp';
 import Footer from './modules/core/Footer';
+import { Home } from './modules/core/Home';
 import Solutions from './modules/core/Solutions';
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
 						<Route path="/products" element={<Products />} />
+						<Route path="/home" element={<Home />} />
 						<Route path="/productOverview" element={<ProductOverview />} />
 						<Route path="/edit-product/:id" element={<EditProduct />} />
 						<Route path="/solutions" element={<Solutions />} />

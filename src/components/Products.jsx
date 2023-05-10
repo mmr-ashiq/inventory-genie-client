@@ -20,7 +20,7 @@ export default function Example() {
 	const [productId, setProductId] = useState(null);
 
 	const [opened, { open, close }] = useDisclosure(false);
-	const { addToCart, cart, removeFromCart } = useCart();
+	const { addToCart, cart } = useCart();
 
 	console.log(cart);
 
