@@ -13,7 +13,6 @@ import Contact from '../src/modules/core/Contact';
 import Pricing from '../src/modules/core/Pricing';
 import { EditProduct } from './components/EditProduct';
 import HomePage from './components/HomePage';
-// import Test from './components/Test';
 import Navbar from './components/Navbar';
 import MyNavbar from './components/MyNavbar';
 import NotFound from './components/NotFound';
@@ -23,6 +22,7 @@ import ProductOverview from './components/ProductOverview';
 import { CartProvider } from './context/products.context';
 import SignIn from './modules/core/SignIn';
 import SignUp from './modules/core/SignUp';
+import Footer from './modules/core/Footer';
 import Solutions from './modules/core/Solutions';
 
 export default function App() {
@@ -43,7 +43,6 @@ export default function App() {
 						<Route path="/orderHistory" element={<OrderHistory />} />
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/MyNavbar" elemnet={<MyNavbar />} />
-						{/* <Route path="/test" element={<Test />} /> */}
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
@@ -53,7 +52,7 @@ export default function App() {
 						<Route path="/solutions" element={<Solutions />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
-					{/* <Footer /> */}
+					<Footer />
 				</MantineProvider>
 			</CartProvider>
 			<ToastContainer />
