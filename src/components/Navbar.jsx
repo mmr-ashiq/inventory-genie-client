@@ -69,9 +69,8 @@ export default function Example() {
 											logOutToast();
 											await logoutApi();
 
-											await queryClient.resetQueries({
+											await queryClient.invalidateQueries({
 												queryKey: 'isLoggedIn',
-												exact: true,
 											});
 										}}
 									>

@@ -1,8 +1,8 @@
 import { MantineProvider } from '@mantine/core';
 import { Route, Routes } from 'react-router-dom';
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import Cart from '../src/components/Cart';
 import CheckOut from '../src/components/CheckOut';
 import Dashboard from '../src/components/Dashboard';
@@ -25,14 +25,16 @@ import SignUp from './modules/core/SignUp';
 import Footer from './modules/core/Footer';
 import { Home } from './modules/core/Home';
 import Solutions from './modules/core/Solutions';
+import { useIsLoggedIn } from './hooks/useIsLoggedIn';
+import { Sidebar } from './components/Sidebar';
 
 export default function App() {
+	const { data } = useIsLoggedIn();
 	return (
 		<>
 			<CartProvider>
 				<MantineProvider withGlobalStyles withNormalizeCSS>
-					<Navbar />
-					{/* <MyNavbar /> */}
+					{data?.isLoggedIn ? <Sidebar /> : <Navbar />}
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<About />} />
