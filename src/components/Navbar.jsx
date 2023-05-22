@@ -1,14 +1,8 @@
-import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
+import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { logoutApi } from '../apis/auth.apis';
 import logo from '../assets/diulogo_white.png';
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
-
-// import 'react-toastify/dist/ReactToastify.css';
-
-import { AiOutlineUser } from 'react-icons/ai';
 
 const navigation = [
 	{ name: 'Solutions', href: '/solutions' },
@@ -18,16 +12,9 @@ const navigation = [
 ];
 
 export default function Example() {
-	const queryClient = useQueryClient();
+
 
 	const { data } = useIsLoggedIn();
-
-	const logOutToast = () =>
-		toast.success('You have successfully signed out!', {
-			theme: 'colored',
-			autoClose: 2000,
-			icon: '👋',
-		});
 
 	return (
 		<>
@@ -62,20 +49,6 @@ export default function Example() {
 											{data.userData?.name || 'User'}
 										</span>
 									</span>
-
-									<button
-										className="inline-block px-4 py-2 text-base font-medium text-white bg-indigo-500 border border-transparent rounded-md hover:bg-opacity-75"
-										onClick={async () => {
-											logOutToast();
-											await logoutApi();
-
-											await queryClient.invalidateQueries({
-												queryKey: 'isLoggedIn',
-											});
-										}}
-									>
-										Log out
-									</button>
 								</>
 							) : (
 								<>

@@ -1,24 +1,9 @@
 import React from 'react';
+import { AiOutlineMail } from 'react-icons/ai';
+import profileImage from '../../assets/profile.jpg';
 import supervisorImage from '../../assets/supervisor.jpg';
 
-
-const people = [
-	{
-		name: '-Mizanur Rahman Ashiq',
-		role: '🧑‍💻Developer',
-		imageUrl: 'https://avatars.githubusercontent.com/u/30866225?v=4',
-		bio: `I am enthusiastic about Programming and Software Development. Nowadays, I'm mostly working on enhancing user-experience through React js, Next Js etc. For Backend part i use Node js and express js.`,
-	},
-	{
-		name: '-Esraq Humayun',
-		role: '🧑‍🏫Supervisor',
-		imageUrl: supervisorImage,
-		bio: '📨 esraq.swe@diu.edu.bd',
-	},
-];
-
 export default function Example() {
-
 	return (
 		<div className="bg-white">
 			<div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8 lg:py-24">
@@ -30,32 +15,70 @@ export default function Example() {
 						</span>
 					</h2>
 
-					<ul className="space-y-12 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 lg:gap-y-12 lg:space-y-0">
-						{people.map((person) => (
-							<li key={person.name}>
-								<div className="space-y-4 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-y-0 lg:gap-8">
-									<div className="h-0 aspect-w-3 aspect-h-2 sm:aspect-w-3 sm:aspect-h-4">
-										<img
-											className="object-cover rounded-lg shadow-lg"
-											src={person.imageUrl}
-											alt=""
-										/>
-									</div>
-									<div className="p-1 rounded-lg bg-slate-100 sm:col-span-2">
-										<div className="space-y-4">
-											<div className="space-y-1 text-lg font-medium leading-6">
-												<h3>{person.name}</h3>
-												<p className="text-indigo-600">{person.role}</p>
-											</div>
-											<div className="p-2 text-sm">
-												<p className="text-gray-500">{person.bio}</p>
-											</div>
+					<div className="flex justify-center">
+						<figure className="p-8 m-2 md:flex bg-slate-300 rounded-xl md:p-0">
+							<img
+								className="w-24 h-24 mx-auto rounded-l-full md:w-48 md:h-auto md:rounded-l-xl"
+								src={profileImage}
+								alt=""
+								width="384"
+								height="512"
+							/>
+							<div className="pt-6 space-y-4 text-center md:p-8 md:text-left">
+								<div className="text-xl italic font-medium underline decoration-sky-500">
+									Presented By
+								</div>
+
+								<figcaption className="font-medium">
+									<div>
+									<span className='text-xl text-sky-500'>Mizanur Rahman Ashiq</span>  <br />
+										<div className="text-slate-700 dark:text-slate-500">
+											Developer, InventoryGenie
+										</div>
+										<span className="text-slate-500">
+											Student ID: 192-35-2844
+										</span>
+										<br />
+										<div className="flex items-center">
+											<AiOutlineMail className="mr-2" />
+											<span className='font-normal'>mizanur35-2844@diu.edu.bd</span>
 										</div>
 									</div>
+								</figcaption>
+							</div>
+						</figure>
+
+						<figure className="p-8 m-2 md:flex bg-slate-300 rounded-xl md:p-0">
+							<img
+								className="w-24 h-24 mx-auto rounded-l-full md:w-48 md:h-auto md:rounded-l-xl"
+								src={supervisorImage}
+								alt=""
+								width="384"
+								height="512"
+							/>
+							<div className="pt-6 space-y-4 text-center md:p-8 md:text-left">
+								<div className="text-xl italic font-medium underline decoration-sky-500">
+									Supervised by
 								</div>
-							</li>
-						))}
-					</ul>
+								<figcaption className="font-medium">
+									<div>
+									<span className='text-xl text-sky-500'>Mr. Esraq Humayun</span>  <br />
+										<div className="text-slate-700 dark:text-slate-500">
+											Lecturer, Department of SWE
+										</div>
+										<span className="text-slate-500">
+											Daffodil International University
+										</span>
+										<br />
+										<div className="flex items-center">
+											<AiOutlineMail className="mr-2" />
+											<span className='font-normal'>esraq.swe@diu.edu.bd</span>
+										</div>
+									</div>
+								</figcaption>
+							</div>
+						</figure>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -13,20 +13,19 @@ import Contact from '../src/modules/core/Contact';
 import Pricing from '../src/modules/core/Pricing';
 import { EditProduct } from './components/EditProduct';
 import HomePage from './components/HomePage';
+import LoggedInNavbar from './components/LoggedInNavbar';
 import Navbar from './components/Navbar';
-import MyNavbar from './components/MyNavbar';
 import NotFound from './components/NotFound';
-import Profile from './modules/core/Profile';
 import ProductDetails from './components/ProductDetails';
 import ProductOverview from './components/ProductOverview';
 import { CartProvider } from './context/products.context';
-import SignIn from './modules/core/SignIn';
-import SignUp from './modules/core/SignUp';
+import { useIsLoggedIn } from './hooks/useIsLoggedIn';
 import Footer from './modules/core/Footer';
 import { Home } from './modules/core/Home';
+import Profile from './modules/core/Profile';
+import SignIn from './modules/core/SignIn';
+import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
-import { useIsLoggedIn } from './hooks/useIsLoggedIn';
-import { Sidebar } from './components/Sidebar';
 
 export default function App() {
 	const { data } = useIsLoggedIn();
@@ -34,7 +33,7 @@ export default function App() {
 		<>
 			<CartProvider>
 				<MantineProvider withGlobalStyles withNormalizeCSS>
-					{data?.isLoggedIn ? <Sidebar /> : <Navbar />}
+					{data?.isLoggedIn ? <LoggedInNavbar /> : <Navbar />}
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/about" element={<About />} />
@@ -45,7 +44,6 @@ export default function App() {
 						<Route path="/productDetails" element={<ProductDetails />} />
 						<Route path="/orderHistory" element={<OrderHistory />} />
 						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/MyNavbar" elemnet={<MyNavbar />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
