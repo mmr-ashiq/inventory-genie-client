@@ -31,7 +31,10 @@ export default function Example() {
 
 								<figcaption className="font-medium">
 									<div>
-									<span className='text-xl text-sky-500'>Mizanur Rahman Ashiq</span>  <br />
+										<span className="text-xl text-sky-500">
+											Mizanur Rahman Ashiq
+										</span>{' '}
+										<br />
 										<div className="text-slate-700 dark:text-slate-500">
 											Developer, InventoryGenie
 										</div>
@@ -41,7 +44,9 @@ export default function Example() {
 										<br />
 										<div className="flex items-center">
 											<AiOutlineMail className="mr-2" />
-											<span className='font-normal'>mizanur35-2844@diu.edu.bd</span>
+											<span className="font-normal">
+												mizanur35-2844@diu.edu.bd
+											</span>
 										</div>
 									</div>
 								</figcaption>
@@ -62,7 +67,10 @@ export default function Example() {
 								</div>
 								<figcaption className="font-medium">
 									<div>
-									<span className='text-xl text-sky-500'>Mr. Esraq Humayun</span>  <br />
+										<span className="text-xl text-sky-500">
+											Mr. Esraq Humayun
+										</span>{' '}
+										<br />
 										<div className="text-slate-700 dark:text-slate-500">
 											Lecturer, Department of SWE
 										</div>
@@ -72,7 +80,7 @@ export default function Example() {
 										<br />
 										<div className="flex items-center">
 											<AiOutlineMail className="mr-2" />
-											<span className='font-normal'>esraq.swe@diu.edu.bd</span>
+											<span className="font-normal">esraq.swe@diu.edu.bd</span>
 										</div>
 									</div>
 								</figcaption>

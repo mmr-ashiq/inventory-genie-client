@@ -4,6 +4,8 @@ export const getProductsApi = async () => API_CLIENT.get('/products');
 export const getSingleProductApi = async (id) =>
 	API_CLIENT.get(`/products/${id}/single`);
 
+export const addProductApi = async (data) => API_CLIENT.post('/products', data);
+
 export const updateProductApi = async ({ id, data }) =>
 	API_CLIENT.put(`/products/${id}`, data);
 

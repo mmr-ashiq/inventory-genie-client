@@ -78,7 +78,9 @@ export default function Example() {
 								className="border-b border-gray-200 hover:bg-gray-100"
 							>
 								<td className="px-6 py-3 text-left whitespace-nowrap">
-									{product.id}
+									<label>
+										<input type="checkbox" className="checkbox" />
+									</label>
 								</td>
 								<td className="px-6 py-3 text-left">{product.name}</td>
 								<td className="px-6 py-3 text-left">{product.description}</td>
@@ -92,7 +94,7 @@ export default function Example() {
 								<td className="px-6 py-3 text-center">
 									{!!product.images.length && (
 										<img
-											className="h-14 w-14"
+											className="w-12 h-12 mask mask-squircle"
 											src={product.images[0]}
 											alt="product_img"
 										/>

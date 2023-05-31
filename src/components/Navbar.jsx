@@ -58,12 +58,6 @@ export default function Example() {
 									>
 										Log in
 									</Link>
-									<Link
-										to="/signup"
-										className="inline-block px-4 py-2 text-base font-medium text-white bg-indigo-500 border border-transparent rounded-md hover:bg-opacity-75"
-									>
-										Sign up
-									</Link>
 								</>
 							)}
 						</div>
