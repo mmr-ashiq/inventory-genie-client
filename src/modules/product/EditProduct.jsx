@@ -1,7 +1,7 @@
 import { Button } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
-import { updateProductApi } from '../apis/product.apis';
-import { useGetSingleProduct } from '../hooks/useProducts';
+import { updateProductApi } from '../../apis/product.apis';
+import { useGetSingleProduct } from '../../hooks/useProducts';
 
 export const EditProduct = ({ productId }) => {
 	const id = productId;

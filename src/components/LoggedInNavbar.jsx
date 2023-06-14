@@ -5,15 +5,11 @@ import { toast } from 'react-toastify';
 import { logoutApi } from '../apis/auth.apis';
 import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
 
-import {
-	AiOutlineCloseCircle,
-	AiOutlineDown,
-	AiFillSetting,
-} from 'react-icons/ai';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { FiLogOut } from 'react-icons/fi';
-import { VscAccount } from 'react-icons/vsc';
 import { Menu, Transition } from '@headlessui/react';
+import { AiOutlineCloseCircle, AiOutlineDown } from 'react-icons/ai';
+import { FiLogOut } from 'react-icons/fi';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { VscAccount } from 'react-icons/vsc';
 
 const LoggedInNavbar = () => {
 	const queryClient = useQueryClient();
@@ -71,12 +67,14 @@ const LoggedInNavbar = () => {
 
 				<div>
 					<div className="flex items-center">
-						<Menu as="div" className="relative ml-3 z-50">
+						<Menu as="div" className="relative z-50 ml-3">
 							<div>
 								<Menu.Button className="flex items-center max-w-xs text-sm">
 									<VscAccount className="h-10 ml-auto text-2xl text-grey-700" />
 									<span className="hidden ml-3 overflow-hidden text-sm font-semibold text-gray-700 overflow-ellipsis lg:block">
-										<span className="sr-only">Open user menu for </span>
+										<span className="sr-only">
+											Open user menu for{' '}
+										</span>
 										{data.userData?.name}
 									</span>
 									<AiOutlineDown
@@ -97,7 +95,7 @@ const LoggedInNavbar = () => {
 									<Menu.Item>
 										{({ active }) => (
 											<Link
-												to="/your-profile-route"
+												to="/user-profile"
 												className={classNames(
 													active ? 'bg-gray-100' : '',
 													'block px-4 py-2 text-sm text-gray-700'
@@ -130,9 +128,12 @@ const LoggedInNavbar = () => {
 												onClick={async () => {
 													logOutToast();
 													await logoutApi();
-													await queryClient.invalidateQueries({
-														queryKey: 'isLoggedIn',
-													});
+													await queryClient.invalidateQueries(
+														{
+															queryKey:
+																'isLoggedIn',
+														}
+													);
 													navigate('/login'); // Navigate to the login page
 												}}
 											>
@@ -164,7 +165,9 @@ const LoggedInNavbar = () => {
 						{data?.userData?.role === 'manager' ? (
 							<p className="mr-3">Manager Portal</p>
 						) : (
-							<p className="mr-3 font-medium text-slate-700">Admin Portal</p>
+							<p className="mr-3 font-medium text-slate-700">
+								Admin Portal
+							</p>
 						)}
 
 						<button
@@ -180,38 +183,79 @@ const LoggedInNavbar = () => {
 					<div className="px-4 pt-3">
 						<ul className="flex flex-col space-y-4">
 							{data?.userData?.role === 'manager' && (
-								<li
-									className={`text-white ${
-										activeLink === '/dashboard' ? 'font-medium' : ''
-									}`}
-								>
-									<Link
-										to="/dashboard"
-										className={`${
-											activeLink === '/dashboard' ? 'font-medium' : ''
-										}`}
-										onMouseEnter={() => setActiveLink('/dashboard')}
-										onMouseLeave={() => setActiveLink('')}
-									>
-										Dashboard
-									</Link>
-								</li>
-								
-							)}
-							{data?.userData?.role === 'admin' && (
 								<>
 									<li
 										className={`text-white ${
-											activeLink === '/dashboard' ? 'font-medium' : ''
+											activeLink === '/dashboard'
+												? 'font-medium border border-white rounded-md p-1'
+												: ''
 										}`}
 									>
 										<Link
 											to="/dashboard"
 											className={`${
-												activeLink === '/dashboard' ? 'font-medium' : ''
+												activeLink === '/dashboard'
+													? 'font-medium'
+													: ''
 											}`}
-											onMouseEnter={() => setActiveLink('/dashboard')}
-											onMouseLeave={() => setActiveLink('')}
+											onMouseEnter={() =>
+												setActiveLink('/dashboard')
+											}
+											onMouseLeave={() =>
+												setActiveLink('/dashboard')
+											}
+										>
+											Dashboard
+										</Link>
+									</li>
+									<li
+										className={`text-white ${
+											activeLink === '/manage-admin'
+												? 'font-medium border border-white rounded-md p-1'
+												: ''
+										}`}
+									>
+										<Link
+											to="/manage-admin"
+											className={`${
+												activeLink === '/manage-admin'
+													? 'font-medium'
+													: ''
+											}`}
+											onMouseEnter={() =>
+												setActiveLink('/manage-admin')
+											}
+											onMouseLeave={() =>
+												setActiveLink('/manage-admin')
+											}
+										>
+											Manage-Admin
+										</Link>
+									</li>
+								</>
+							)}
+							{data?.userData?.role === 'admin' && (
+								<>
+									<li
+										className={`text-white ${
+											activeLink === '/dashboard'
+												? 'font-medium border border-white rounded-md p-1'
+												: ''
+										}`}
+									>
+										<Link
+											to="/dashboard"
+											className={`${
+												activeLink === '/dashboard'
+													? 'font-medium'
+													: ''
+											}`}
+											onMouseEnter={() =>
+												setActiveLink('/dashboard')
+											}
+											onMouseLeave={() =>
+												setActiveLink('/dashboard')
+											}
 										>
 											Dashboard
 										</Link>
@@ -220,17 +264,28 @@ const LoggedInNavbar = () => {
 									<li
 										className={`text-white ${
 											activeLink === '/manage-inventory'
-												? 'font-medium border border-red-600'
+												? 'font-medium border border-white rounded-md p-1'
 												: ''
 										}`}
 									>
 										<Link
 											to="/manage-inventory"
 											className={`${
-												activeLink === '/manage-inventory' ? 'font-medium' : ''
+												activeLink ===
+												'/manage-inventory'
+													? 'font-medium'
+													: ''
 											}`}
-											onMouseEnter={() => setActiveLink('/manage-inventory')}
-											onMouseLeave={() => setActiveLink('/manage-inventory')}
+											onMouseEnter={() =>
+												setActiveLink(
+													'/manage-inventory'
+												)
+											}
+											onMouseLeave={() =>
+												setActiveLink(
+													'/manage-inventory'
+												)
+											}
 										>
 											Manage Inventory
 										</Link>
@@ -238,16 +293,29 @@ const LoggedInNavbar = () => {
 
 									<li
 										className={`text-white ${
-											activeLink === '/manage-customer' ? 'font-medium' : ''
+											activeLink === '/manage-customer'
+												? 'font-medium border border-white rounded-md p-1'
+												: ''
 										}`}
 									>
 										<Link
 											to="/manage-customer"
 											className={`${
-												activeLink === '/manage-customer' ? 'font-medium' : ''
+												activeLink ===
+												'/manage-customer'
+													? 'font-medium'
+													: ''
 											}`}
-											onMouseEnter={() => setActiveLink('/manage-customer')}
-											onMouseLeave={() => setActiveLink('/manage-customer')}
+											onMouseEnter={() =>
+												setActiveLink(
+													'/manage-customer'
+												)
+											}
+											onMouseLeave={() =>
+												setActiveLink(
+													'/manage-customer'
+												)
+											}
 										>
 											Manage Customers
 										</Link>
@@ -255,16 +323,24 @@ const LoggedInNavbar = () => {
 
 									<li
 										className={`text-white ${
-											activeLink === '/vendors' ? 'font-medium' : ''
+											activeLink === '/vendors'
+												? 'font-medium border border-white rounded-md p-1'
+												: ''
 										}`}
 									>
 										<Link
-											to="/orders"
+											to="/manage-vendor"
 											className={`${
-												activeLink === '/vendors' ? 'font-medium' : ''
+												activeLink === '/vendors'
+													? 'font-medium'
+													: ''
 											}`}
-											onMouseEnter={() => setActiveLink('/vendors')}
-											onMouseLeave={() => setActiveLink('')}
+											onMouseEnter={() =>
+												setActiveLink('/vendors')
+											}
+											onMouseLeave={() =>
+												setActiveLink('/vendors')
+											}
 										>
 											Manage Vendors
 										</Link>

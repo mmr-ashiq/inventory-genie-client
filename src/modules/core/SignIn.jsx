@@ -1,9 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { loginApi } from '../../apis/auth.apis';
 import 'react-toastify/dist/ReactToastify.css';
+import { loginApi } from '../../apis/auth.apis';
 
 const SignIn = () => {
 	const navigator = useNavigate();
@@ -114,14 +114,6 @@ const SignIn = () => {
 										Remember me
 									</label>
 								</div>
-
-								{/* <div className="text-sm">
-                  <a href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot your password?
-                  </a>
-                </div> */}
 							</div>
 
 							<div>
@@ -133,15 +125,6 @@ const SignIn = () => {
 								</button>
 							</div>
 						</form>
-						<p className="mt-4 text-sm text-gray-600">
-							Don't have an account?{' '}
-							<Link
-								to="/signup"
-								className="text-indigo-500 hover:text-indigo-600"
-							>
-								Sign up.
-							</Link>
-						</p>
 					</div>
 				</div>
 			</div>

@@ -1,44 +1,59 @@
 import {
 	Bars4Icon,
+	BuildingStorefrontIcon,
 	CalendarIcon,
+	ChartBarIcon,
 	CheckIcon,
+	DevicePhoneMobileIcon,
 	PlusIcon,
 	UsersIcon,
-	ViewColumnsIcon,
 } from '@heroicons/react/24/outline';
 
 const features = [
 	{
-		name: 'List view',
+		name: 'Barcode Scanning',
 		icon: Bars4Icon,
 		description:
-			'Nunc a, lacinia sed risus neque, arcu, rhoncus. Id mauris justo facilisis aliquam platea vestibulum condimentum morbi.',
+			'Our future system update will have feature barcode scanning. enabling effortless tracking, accurate stock updates, and efficient inventory management.',
 	},
 	{
-		name: 'Boards',
-		icon: ViewColumnsIcon,
+		name: 'Demand Forecasting and Inventory Optimization',
+		icon: ChartBarIcon,
 		description:
-			'Purus lobortis volutpat posuere id integer nunc tellus. Non mauris malesuada feugiat massa mi pellentesque cum est. Pharetra a varius urna rhoncus, tempor rutrum.',
+			'We will impliment advanced algorithms and historical data to forecast demand, optimize stock levels, and minimize excess inventory or stockouts',
 	},
 	{
-		name: 'Calendar',
-		icon: CalendarIcon,
+		name: 'Warehouse Management',
+		icon: BuildingStorefrontIcon,
 		description:
-			'Purus lobortis volutpat posuere id integer nunc tellus. Non mauris malesuada feugiat massa mi pellentesque cum est. Pharetra a varius urna rhoncus, tempor rutrum.',
+			'Business owners will be able to manage and track inventory within warehouses, including bin locations, picking, packing, and shipping processes, in our future system update',
 	},
 	{
-		name: 'Teams',
+		name: 'Mobile Application',
+		icon: DevicePhoneMobileIcon,
+		description: 'Barcode Scanning and RFID Integration',
+	},
+	{
+		name: 'Integration with Shipping Carriers',
 		icon: UsersIcon,
-		description:
-			'Tincidunt sollicitudin interdum nunc sit risus at bibendum vitae. Urna, quam ut sit justo non, consectetur et varius.',
+		description: 'Barcode Scanning and RFID Integration',
+	},
+	{
+		name: 'Expiry Date Tracking',
+		icon: CalendarIcon,
+		description: 'Barcode Scanning and RFID Integration',
 	},
 ];
 const checklist = [
-	'Unlimited projects',
-	'No per user fees',
-	'Unlimited storage',
+	'Inventory Tracking',
+	'Product Dashboard',
+	'Purchase Order Management',
+	'Staff Management',
+	'User Permissions and Roles',
+	'Vendor Management',
+	'Reporting and Analytics',
+	'Data Security',
 	'24/7 support',
-	'Cancel any time',
 	'14 days free',
 ];
 
@@ -52,10 +67,11 @@ export default function Example() {
 				<div className="px-4 py-16 bg-white sm:py-24 sm:px-6 lg:px-0 lg:pr-8">
 					<div className="max-w-lg mx-auto lg:mx-0">
 						<h2 className="text-lg font-semibold text-indigo-600">
-							Full-featured
+							Full-featured Solution
 						</h2>
 						<p className="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl sm:tracking-tight">
-							Everything you need to talk with your customers
+							Manage your inventory efficiently and streamline
+							your operations.
 						</p>
 						<dl className="mt-12 space-y-10">
 							{features.map((feature) => (
@@ -86,7 +102,7 @@ export default function Example() {
 							<p className="relative grid grid-cols-2">
 								<span className="flex flex-col text-center">
 									<span className="text-5xl font-bold tracking-tight text-white">
-										৳5500
+										৳৫৫০০
 									</span>
 									<span className="mt-2 text-base font-medium text-indigo-200">
 										Setup fee
@@ -105,7 +121,7 @@ export default function Example() {
 								<span>
 									<span className="flex flex-col text-center">
 										<span className="text-5xl font-bold tracking-tight text-white">
-											৳1000
+											৳১০০০
 										</span>
 										<span className="mt-2 text-base font-medium text-indigo-200">
 											Per month
@@ -114,10 +130,7 @@ export default function Example() {
 								</span>
 							</p>
 						</div>
-						<ul
-							
-							className="grid gap-px overflow-hidden rounded sm:grid-cols-2"
-						>
+						<ul className="grid gap-px overflow-hidden rounded sm:grid-cols-2">
 							{checklist.map((item) => (
 								<li
 									key={item}

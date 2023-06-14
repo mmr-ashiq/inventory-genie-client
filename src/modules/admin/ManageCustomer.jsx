@@ -10,6 +10,7 @@ import {
 
 import { useDeleteCustomer, useGetCustomers } from '../../hooks/useCustomers';
 import { EditCustomer } from '../customer/EditCustomer';
+import AddNewCustomer from '../../components/AddNewCustomer';
 
 export default function Example() {
 	const [customerId, setCustomerId] = useState(null);
@@ -19,6 +20,10 @@ export default function Example() {
 	] = useDisclosure(false);
 	const [openedEditModal, { open: openEditModal, close: closeEditModal }] =
 		useDisclosure(false);
+	const [
+		addNewCustomerOpened,
+		{ open: addNewCustomerOpen, close: addNewCustomerClose },
+	] = useDisclosure(false);
 	const { data, error, mutate } = useGetCustomers(); // Added mutate function
 	const customers = data?.customers || [];
 	const deleteCustomer = useDeleteCustomer();
@@ -45,7 +50,12 @@ export default function Example() {
 	return (
 		<div className="container mx-auto">
 			<div className="flex justify-start mt-2">
-				<button className="flex items-center px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300">
+				<button
+					className="flex items-center px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+					onClick={() => {
+						addNewCustomerOpen();
+					}}
+				>
 					<AiOutlinePlusCircle size={20} className="mr-2" />
 					Add Customer
 				</button>
@@ -176,6 +186,10 @@ export default function Example() {
 				shadow="md"
 			>
 				<EditCustomer customerId={customerId} />
+			</Modal>
+
+			<Modal opened={addNewCustomerOpened} onClose={addNewCustomerClose}>
+				<AddNewCustomer />
 			</Modal>
 		</div>
 	);

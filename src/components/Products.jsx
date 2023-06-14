@@ -14,19 +14,25 @@ import { useGetProducts } from '../hooks/useProducts';
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useCart } from '../context/products.context';
-import { EditProduct } from './EditProduct';
+import { EditProduct } from '../modules/product/EditProduct';
 
 export default function Example() {
 	const [productId, setProductId] = useState(null);
-
 	const [opened, { open, close }] = useDisclosure(false);
 	const { addToCart, cart } = useCart();
-
-	console.log(cart);
-
 	const { data, error } = useGetProducts();
 
 	const products = data?.products || [];
+
+	const [expandedDescriptions, setExpandedDescriptions] = useState([]);
+
+	const toggleDescription = (productId) => {
+		setExpandedDescriptions((prevState) =>
+			prevState.includes(productId)
+				? prevState.filter((id) => id !== productId)
+				: [...prevState, productId]
+		);
+	};
 
 	if (error) return <div>failed to load</div>;
 
@@ -79,18 +85,78 @@ export default function Example() {
 							>
 								<td className="px-6 py-3 text-left whitespace-nowrap">
 									<label>
-										<input type="checkbox" className="checkbox" />
+										<input
+											type="checkbox"
+											className="checkbox"
+										/>
 									</label>
 								</td>
-								<td className="px-6 py-3 text-left">{product.name}</td>
-								<td className="px-6 py-3 text-left">{product.description}</td>
+								<td className="px-6 py-3 text-left">
+									{product.name}
+								</td>
+								<td className="px-6 py-3 text-left">
+									{product.description.length > 20 ? (
+										<div>
+											<span>
+												{product.description.slice(
+													0,
+													20
+												)}
+												{expandedDescriptions.includes(
+													product.id
+												)
+													? ' ' +
+													  product.description.slice(
+															20
+													  )
+													: '...'}
+											</span>
+											{expandedDescriptions.includes(
+												product.id
+											) ? (
+												<>
+													<br />
+													<span>
+														{product.description}
+													</span>
+													<br />
+													<button
+														className="text-sm font-light text-blue-500 hover:text-blue-700"
+														onClick={() =>
+															toggleDescription(
+																product.id
+															)
+														}
+													>
+														Show less
+													</button>
+												</>
+											) : (
+												<button
+													className="text-sm font-light text-blue-500 hover:text-blue-700"
+													onClick={() =>
+														toggleDescription(
+															product.id
+														)
+													}
+												>
+													Show more
+												</button>
+											)}
+										</div>
+									) : (
+										product.description
+									)}
+								</td>
 								<td className="px-6 py-3 text-left">
 									৳{product.price.toFixed(2)}
 								</td>
 								<td className="px-6 py-3 text-left">
 									{product.discount * 100}%
 								</td>
-								<td className="px-6 py-3 text-left">{product.stock}</td>
+								<td className="px-6 py-3 text-left">
+									{product.stock}
+								</td>
 								<td className="px-6 py-3 text-center">
 									{!!product.images.length && (
 										<img
@@ -108,20 +174,33 @@ export default function Example() {
 												setProductId(product._id);
 												open();
 											}}
-											disabled={cart.find((item) => item._id === product._id)}
+											disabled={cart.find(
+												(item) =>
+													item._id === product._id
+											)}
 											title="Edit product"
 										>
-											<AiOutlineEdit size={25} className="mr-2" />
+											<AiOutlineEdit
+												size={25}
+												className="mr-2"
+											/>
 										</button>
 										|
 										<button className="text-red-500 hover:text-red-700">
-											<AiOutlineDelete size={25} className="mr-2" />
+											<AiOutlineDelete
+												size={25}
+												className="mr-2"
+											/>
 										</button>
 										|
-										{!cart.find((item) => item._id === product._id) && (
+										{!cart.find(
+											(item) => item._id === product._id
+										) && (
 											<button
 												className="text-green-500 hover:text-green-700"
-												onClick={() => addToCart(product)}
+												onClick={() =>
+													addToCart(product)
+												}
 											>
 												<AiFillShopping size={25} />
 											</button>
