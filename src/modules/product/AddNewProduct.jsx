@@ -1,7 +1,7 @@
 import { Button, MultiSelect } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { createProductApi } from '../apis/product.apis';
+import { createProductApi } from '../../apis/product.apis';
 
 export const AddNewProduct = () => {
 	const queryClient = useQueryClient();

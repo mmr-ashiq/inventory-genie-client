@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { addCustomerApi } from '../apis/customer.apis';
+import { toast } from 'react-toastify';
+import { addCustomerApi } from '../../apis/customer.apis';
+import { useGetCustomers } from '../../hooks/useCustomers';
 
-const AddNewCustomer = () => {
+const AddNewCustomer = ({ onClose }) => {
+	const { mutate } = useGetCustomers();
 	const [customerData, setCustomerData] = useState({
 		name: '',
 		email: '',
@@ -23,7 +25,24 @@ const AddNewCustomer = () => {
 		try {
 			const response = await addCustomerApi(customerData);
 
-            console.log(response)
+			// Display toast message on success
+			toast.success('Customer added successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+
+			// Close the modal
+			onClose();
+
+			// Update the customer table in real-time by re-fetching the customers
+			mutate(async (data) => {
+				// Make a shallow copy of the data array
+				const newData = [...data];
+
+				// Add the newly created customer to the copy
+				newData.push(response.data);
+
+				return newData;
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -103,9 +122,11 @@ const AddNewCustomer = () => {
 					/>
 				</div>
 
+				<hr />
+
 				<button
 					type="submit"
-					className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+					className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mt-2"
 				>
 					Add Customer
 				</button>

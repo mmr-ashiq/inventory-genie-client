@@ -2,9 +2,8 @@ import styled from 'styled-components';
 
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { BarChart } from '../../components/BarChart';
-import { useTopSixProducts } from '../../hooks/useProducts';
-import { YearlySellReportChart } from '../../components/YearlySellReportChart';
+import { BarChart } from '../../components/Dashboard/BarChart';
+import { YearlySellReportChart } from '../../components/Dashboard/YearlySellReportChart';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import logo from '../assets/diulogo_white.png';
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+import logo from '../../assets/diulogo_white.png';
+import { useIsLoggedIn } from '../../hooks/useIsLoggedIn';
 
 const navigation = [
 	{ name: 'Solutions', href: '/solutions' },

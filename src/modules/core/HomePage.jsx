@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../assets/homePage.svg';
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+import logo from '../../assets/homePage.svg';
+import { useIsLoggedIn } from '../../hooks/useIsLoggedIn';
 
 const HomePage = () => {
   const { data } = useIsLoggedIn();

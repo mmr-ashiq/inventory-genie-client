@@ -1,16 +1,15 @@
-import { Modal, Button } from '@mantine/core';
+import { Button, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React, { useState } from 'react';
 import {
 	AiOutlineDelete,
 	AiOutlineEdit,
 	AiOutlinePlusCircle,
-	AiOutlineSearch,
 } from 'react-icons/ai';
 
-import { EditVendor } from '../vendor/EditVendor';
 import { useGetVendors } from '../../hooks/useVendors';
 import { AddVendor } from '../vendor/AddVendor';
+import { EditVendor } from '../vendor/EditVendor';
 
 export default function ManageVendor() {
 	const [vendorId, setVendorId] = useState(null);
@@ -26,9 +25,35 @@ export default function ManageVendor() {
 	const { data, error, mutate } = useGetVendors(); // Added mutate function
 	const vendors = data?.vendors || [];
 
-	if (error) return <div>failed to load</div>;
-
 	console.log(vendors);
+
+	// Pagination
+	const itemsPerPage = 5; // Number of items to show per page
+	const totalPages = Math.ceil(vendors.length / itemsPerPage);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const handlePreviousPage = () => {
+		setCurrentPage((prevPage) => prevPage - 1);
+	};
+
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => prevPage + 1);
+	};
+
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const handleSearchInputChange = (event) => {
+		setSearchQuery(event.target.value);
+	};
+
+	const handleDeleteVendor = async (vendorID) => {
+
+	}
+
+	// Apply pagination
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+	const paginatedVendors = vendors.slice(startIndex, endIndex);
 
 	return (
 		<div className="container mx-auto">
@@ -43,82 +68,72 @@ export default function ManageVendor() {
 			</div>
 
 			<div className="flex justify-end mt-2">
-				<div className="relative">
-					<input
-						type="text"
-						placeholder="Search Vendor"
-						className="px-4 py-2 text-gray-700 rounded-md focus:outline-none"
-					/>
-					<div className="absolute top-0 right-0 flex items-center justify-center h-full w-14">
-						<button className="text-gray-500 hover:text-blue-800">
-							<AiOutlineSearch size={25} />
-						</button>
-					</div>
-				</div>
+				<input
+					type="text"
+					placeholder="Search..."
+					value={searchQuery}
+					onChange={handleSearchInputChange}
+					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+				/>
+				<button
+					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+					onClick={() => setSearchQuery('')}
+				>
+					Clear
+				</button>
 			</div>
 
 			<div className="my-6 bg-white rounded shadow-md">
 				<table className="w-full table-auto">
 					<thead>
 						<tr className="text-sm leading-normal text-gray-600 uppercase bg-gray-200">
-							<th className="px-6 py-3 text-left">Id</th>
-							<th className="px-6 py-3 text-left">
-								Company Name
-							</th>
-							<th className="px-6 py-3 text-left">Email</th>
-							<th className="px-6 py-3 text-left">Phone</th>
-							<th className="px-6 py-3 text-left">Action</th>
+							<th className="px-4 py-3 text-left">ID</th>
+							<th className="px-4 py-3 text-left">First Name</th>
+							<th className="px-4 py-3 text-left">Email</th>
+							<th className="px-4 py-3 text-left">Phone</th>
+							<th className="px-4 py-3 text-left">Action</th>
 						</tr>
 					</thead>
+
+					{/* Table body */}
 					<tbody className="text-sm font-light text-gray-600">
-						{vendors.map((vendor, index) => (
+						{paginatedVendors.map((vendor, index) => (
 							<tr
-								key={vendor._id}
+								key={vendor.id}
 								className="border-b border-gray-200 hover:bg-gray-100"
 							>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
-									<div className="flex items-center">
-										<div className="ml-4">
-											<div className="text-sm font-medium text-gray-900">
-												{index + 1}
-											</div>
-										</div>
-									</div>
+								<td className="px-4 py-3 text-left text-sm font-medium">
+									{index + 1}
 								</td>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
-									<div className="text-sm font-medium text-gray-900">
-										{vendor.firstName}
-									</div>
+								<td className="px-4 py-3 text-left text-sm font-medium">
+									{vendor.firstName}
 								</td>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
-									<div className="text-sm font-medium text-gray-900">
-										{vendor.email}
-									</div>
+								<td className="px-4 py-3 text-left text-sm font-medium">
+									{vendor.email}
 								</td>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
-									<div className="text-sm font-medium text-gray-900">
-										{vendor.phone}
-									</div>
+								<td className="px-4 py-3 text-left text-sm font-medium">
+									{vendor.phone}
 								</td>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
-									<div className="flex items-center space-x-4 text-sm font-medium">
+								<td className="px-4 py-3 text-left">
+									<div className="flex space-x-2">
 										<button
-											className="text-indigo-600 hover:text-indigo-900"
+											className="flex items-center px-4 py-2 ml-4 text-indigo-600 transition-colors bg-gray-200 rounded-md hover:text-indigo-900"
 											onClick={() => {
-												setVendorId(vendor._id);
+												setVendorId(vendor.id);
 												openEditModal();
 											}}
 										>
-											<AiOutlineEdit size={25} />
+											<AiOutlineEdit size={20} />
 										</button>
+
 										<button
-											className="text-red-600 hover:text-red-900"
+											className="flex items-center px-4 py-2 ml-4 text-red-500 transition-colors bg-gray-200 rounded-md hover:text-red-700"
 											onClick={() => {
-												setVendorId(vendor._id);
+												setVendorId(vendor.id);
 												openDeleteModal();
 											}}
 										>
-											<AiOutlineDelete size={25} />
+											<AiOutlineDelete size={20} />
 										</button>
 									</div>
 								</td>
@@ -126,9 +141,40 @@ export default function ManageVendor() {
 						))}
 					</tbody>
 				</table>
+
+				{totalPages > 1 && (
+					<div className="flex items-center justify-center py-4">
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === 1}
+							onClick={handlePreviousPage}
+						>
+							Previous
+						</button>
+						<div className="px-4 py-2 text-sm font-medium text-gray-700">
+							Page {currentPage} of {totalPages}
+						</div>
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === totalPages}
+							onClick={handleNextPage}
+						>
+							Next
+						</button>
+					</div>
+				)}
 			</div>
 
-			{/* <Modal
+			<Modal
+				opened={openedEditModal}
+				onClose={closeEditModal}
+				size="md"
+				shadow="md"
+			>
+				<EditVendor vendorId={vendorId} />
+			</Modal>
+
+			<Modal
 				opened={openedDeleteModal}
 				onClose={closeDeleteModal}
 				size="md"
@@ -154,15 +200,6 @@ export default function ManageVendor() {
 						</Button>
 					</div>
 				</div>
-			</Modal> */}
-
-			<Modal
-				opened={openedEditModal}
-				onClose={closeEditModal}
-				size="md"
-				shadow="md"
-			>
-				<EditVendor vendorId={vendorId} />
 			</Modal>
 
 			<Modal
@@ -172,7 +209,6 @@ export default function ManageVendor() {
 				shadow="md"
 			>
 				<div className="p-6">
-					{/* AddVendor component */}
 					<AddVendor onClose={closeAddModal} onSuccess={mutate} />
 				</div>
 			</Modal>

@@ -4,16 +4,18 @@ import React, { useState } from 'react';
 import {
 	AiOutlineDelete,
 	AiOutlineEdit,
-	AiOutlineSearch,
 	AiOutlinePlusCircle,
 } from 'react-icons/ai';
 
 import { useDeleteCustomer, useGetCustomers } from '../../hooks/useCustomers';
+import AddNewCustomer from '../customer/AddNewCustomer';
 import { EditCustomer } from '../customer/EditCustomer';
-import AddNewCustomer from '../../components/AddNewCustomer';
 
 export default function Example() {
 	const [customerId, setCustomerId] = useState(null);
+	const [currentPage, setCurrentPage] = useState(1);
+	const itemsPerPage = 5; // Number of items to show per page
+
 	const [
 		openedDeleteModal,
 		{ open: openDeleteModal, close: closeDeleteModal },
@@ -24,9 +26,34 @@ export default function Example() {
 		addNewCustomerOpened,
 		{ open: addNewCustomerOpen, close: addNewCustomerClose },
 	] = useDisclosure(false);
-	const { data, error, mutate } = useGetCustomers(); // Added mutate function
+	const { data, error } = useGetCustomers();
 	const customers = data?.customers || [];
 	const deleteCustomer = useDeleteCustomer();
+
+	const totalPages = Math.ceil(customers.length / itemsPerPage);
+
+	const handlePreviousPage = () => {
+		setCurrentPage((prevPage) => prevPage - 1);
+	};
+
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => prevPage + 1);
+	};
+
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const handleSearchInputChange = (event) => {
+		setSearchQuery(event.target.value);
+	};
+	
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+
+	const displayedCustomers = customers
+		.filter((customer) =>
+			customer.name.toLowerCase().includes(searchQuery.toLowerCase())
+		)
+		.slice(startIndex, endIndex);
 
 	if (error) return <div>failed to load</div>;
 
@@ -34,16 +61,8 @@ export default function Example() {
 		try {
 			await deleteCustomer.mutateAsync(customerId);
 			closeDeleteModal();
-			// Remove the deleted customer from the customer list
-			mutate((prevData) => ({
-				...prevData,
-				customers: prevData.customers.filter(
-					(customer) => customer._id !== customerId
-				),
-			}));
 		} catch (error) {
 			console.log(error);
-			// Handle error case or show a notification
 		}
 	};
 
@@ -62,18 +81,19 @@ export default function Example() {
 			</div>
 
 			<div className="flex justify-end mt-2">
-				<div className="relative">
-					<input
-						type="text"
-						placeholder="Search Customer"
-						className="px-4 py-2 text-gray-700 rounded-md focus:outline-none"
-					/>
-					<div className="absolute top-0 right-0 flex items-center justify-center h-full w-14">
-						<button className="text-gray-500 hover:text-blue-800">
-							<AiOutlineSearch size={25} />
-						</button>
-					</div>
-				</div>
+				<input
+					type="text"
+					placeholder="Search..."
+					value={searchQuery}
+					onChange={handleSearchInputChange}
+					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+				/>
+				<button
+					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+					onClick={() => setSearchQuery('')}
+				>
+					Clear
+				</button>
 			</div>
 
 			<div className="my-6 bg-white rounded shadow-md">
@@ -89,7 +109,7 @@ export default function Example() {
 						</tr>
 					</thead>
 					<tbody className="text-sm font-light text-gray-600">
-						{customers.map((customer, index) => (
+						{displayedCustomers.map((customer, index) => (
 							<tr
 								key={customer._id}
 								className="border-b border-gray-200 hover:bg-gray-100"
@@ -123,10 +143,10 @@ export default function Example() {
 										{customer.address}
 									</div>
 								</td>
-								<td className="px-6 py-3 text-left whitespace-nowrap">
+								<td className="px-4 py-3 text-left whitespace-nowrap">
 									<div className="flex items-center space-x-4 text-sm font-medium">
 										<button
-											className="text-indigo-600 hover:text-indigo-900"
+											className="flex items-center px-4 py-2 ml-4 text-indigo-600 transition-colors bg-gray-200 rounded-md hover:text-indigo-900"
 											onClick={() => {
 												setCustomerId(customer._id);
 												openEditModal();
@@ -135,7 +155,7 @@ export default function Example() {
 											<AiOutlineEdit size={25} />
 										</button>
 										<button
-											className="text-red-600 hover:text-red-900"
+											className="flex items-center px-4 py-2 ml-4 text-red-600 transition-colors bg-gray-200 rounded-md hover:text-red-900"
 											onClick={() => {
 												setCustomerId(customer._id);
 												openDeleteModal();
@@ -149,6 +169,27 @@ export default function Example() {
 						))}
 					</tbody>
 				</table>
+				{totalPages > 1 && (
+					<div className="flex items-center justify-center py-4">
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === 1}
+							onClick={handlePreviousPage}
+						>
+							Previous
+						</button>
+						<div className="px-4 py-2 text-sm font-medium text-gray-700">
+							Page {currentPage} of {totalPages}
+						</div>
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === totalPages}
+							onClick={handleNextPage}
+						>
+							Next
+						</button>
+					</div>
+				)}
 			</div>
 
 			<Modal
@@ -189,7 +230,7 @@ export default function Example() {
 			</Modal>
 
 			<Modal opened={addNewCustomerOpened} onClose={addNewCustomerClose}>
-				<AddNewCustomer />
+				<AddNewCustomer onClose={addNewCustomerClose} />
 			</Modal>
 		</div>
 	);

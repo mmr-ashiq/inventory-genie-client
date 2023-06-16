@@ -9,12 +9,12 @@ import {
 	AiOutlineSearch,
 } from 'react-icons/ai';
 
-import { useGetProducts } from '../hooks/useProducts';
+import { useGetProducts } from '../../hooks/useProducts';
 
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useCart } from '../context/products.context';
-import { EditProduct } from '../modules/product/EditProduct';
+import { useCart } from '../../context/products.context';
+import { EditProduct } from './EditProduct';
 
 export default function Example() {
 	const [productId, setProductId] = useState(null);

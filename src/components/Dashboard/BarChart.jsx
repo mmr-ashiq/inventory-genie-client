@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
 import {
-	Chart as ChartJS,
-	CategoryScale,
-	LinearScale,
 	BarElement,
+	CategoryScale,
+	Chart as ChartJS,
+	Legend,
+	LinearScale,
 	Title,
 	Tooltip,
-	Legend,
 } from 'chart.js';
+import React, { useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { useTopSixProducts } from '../hooks/useProducts';
+import { useTopSixProducts } from '../../hooks/useProducts';
 
 ChartJS.register(
 	CategoryScale,

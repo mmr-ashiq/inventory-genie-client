@@ -2,8 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { logoutApi } from '../apis/auth.apis';
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+import { logoutApi } from '../../apis/auth.apis';
+import { useIsLoggedIn } from '../../hooks/useIsLoggedIn';
 
 import { Menu, Transition } from '@headlessui/react';
 import { AiOutlineCloseCircle, AiOutlineDown } from 'react-icons/ai';

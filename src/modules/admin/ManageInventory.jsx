@@ -6,13 +6,12 @@ import {
 	AiOutlineArrowDown,
 	AiOutlineDelete,
 	AiOutlineEdit,
-	AiOutlinePlusCircle,
-	AiOutlineSearch,
+	AiOutlinePlusCircle
 } from 'react-icons/ai';
 import { useCart } from '../../context/products.context';
 import { useGetProducts } from '../../hooks/useProducts';
+import { AddNewProduct } from '../product/AddNewProduct';
 import { EditProduct } from '../product/EditProduct';
-import { AddNewProduct } from '../../components/AddNewProduct';
 
 export default function Example() {
 	const [productId, setProductId] = useState(null);
@@ -69,6 +68,12 @@ export default function Example() {
 		return getWordCount(product.description) > 5;
 	};
 
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const handleSearchInputChange = (event) => {
+		setSearchQuery(event.target.value);
+	};
+
 	const isDescriptionExpanded = (productId) => {
 		return expandedDescriptions.includes(productId);
 	};
@@ -93,18 +98,19 @@ export default function Example() {
 			</div>
 
 			<div className="flex justify-end mt-2">
-				<div className="relative">
-					<input
-						type="text"
-						placeholder="Search Product"
-						className="px-4 py-2 text-gray-700 rounded-md focus:outline-none"
-					/>
-					<div className="absolute top-0 right-0 flex items-center justify-center h-full w-14">
-						<button className="text-gray-500 hover:text-blue-800">
-							<AiOutlineSearch size={25} />
-						</button>
-					</div>
-				</div>
+				<input
+					type="text"
+					placeholder="Search..."
+					value={searchQuery}
+					onChange={handleSearchInputChange}
+					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+				/>
+				<button
+					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+					onClick={() => setSearchQuery('')}
+				>
+					Clear
+				</button>
 			</div>
 
 			<div className="my-6 bg-white rounded shadow-md">
@@ -199,10 +205,10 @@ export default function Example() {
 											/>
 										)}
 									</td>
-									<td className="px-6 py-3 text-center">
+									<td className="px-4 py-3 text-left">
 										<div className="flex space-x-2">
 											<button
-												className="text-blue-500 hover:text-blue-700"
+												className="flex items-center px-4 py-2 ml-4 text-indigo-600 transition-colors bg-gray-200 rounded-md hover:text-indigo-900"
 												onClick={() => {
 													setProductId(product._id);
 													open();
@@ -213,25 +219,17 @@ export default function Example() {
 												)}
 												title="Edit product"
 											>
-												<AiOutlineEdit
-													size={25}
-													className="mr-2"
-												/>
+												<AiOutlineEdit size={25} />
 											</button>
-											|
-											<button className="text-red-500 hover:text-red-700">
-												<AiOutlineDelete
-													size={25}
-													className="mr-2"
-												/>
+											<button className="flex items-center px-4 py-2 ml-4 text-red-500 transition-colors bg-gray-200 rounded-md hover:text-red-700">
+												<AiOutlineDelete size={25} />
 											</button>
-											|
 											{!cart.find(
 												(item) =>
 													item._id === product._id
 											) && (
 												<button
-													className="text-green-500 hover:text-green-700"
+													className="flex items-center px-4 py-2 ml-4 text-green-500 transition-colors bg-gray-200 rounded-md hover:text-green-700"
 													onClick={() =>
 														addToCart(product)
 													}
