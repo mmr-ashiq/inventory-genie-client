@@ -1,12 +1,15 @@
 import { Button, MultiSelect } from '@mantine/core';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { createProductApi } from '../../apis/product.apis';
+import { useGetProducts } from '../../hooks/useProducts';
 
-export const AddNewProduct = () => {
+const AddNewProduct = ({ onClose }) => {
+	const { mutate } = useGetProducts();
 	const queryClient = useQueryClient();
 
-	const [data, setData] = useState({
+	const [productData, setProductData] = useState({
 		name: '',
 		description: '',
 		price: '',
@@ -17,56 +20,43 @@ export const AddNewProduct = () => {
 		images: [],
 	});
 
+	const handleChange = (e) => {
+		setProductData((prevData) => ({
+			...prevData,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// create fromData from state
-		const formData = new FormData();
-
-		for (let key in data) {
-			if (key === 'images') {
-				for (let i = 0; i < data.images.length; i++) {
-					formData.append('images', data.images[i]);
-				}
-				continue;
-			}
-
-			//   stringify arrays
-			if (Array.isArray(data[key])) {
-				formData.append(key, JSON.stringify(data[key]));
-				continue;
-			}
-
-			formData.append(key, data[key]);
-		}
 
 		try {
-			const response = await createProductApi(formData);
+			const response = await createProductApi(productData);
 
-			//   invalidate query
-			queryClient.invalidateQueries({ queryKey: ['products'] });
+			// Display toast message on success
+			toast.success('Product added successfully!', {
+				position: toast.POSITION.TOP_RIGHT,
+			});
+
+			// Close the modal
+			onClose();
+
+			// Update the product table in real-time by re-fetching the products
+			mutate(async (data) => {
+				// Make a shallow copy of the data array
+				const newData = [...data];
+
+				// Add the newly created product to the copy
+				newData.push(response.data);
+
+				return newData;
+			});
+
+			// Invalidate the query to update the UI
+			queryClient.invalidateQueries('products');
 		} catch (error) {
 			console.log(error);
 		}
-
-		// console log formData
-		for (let key of formData.entries()) {
-			console.log(key);
-		}
-	};
-
-	const handleChange = (e) => {
-		if (e.target.name === 'images') {
-			setData((prev) => ({
-				...prev,
-				images: e.target.files,
-			}));
-			return;
-		}
-
-		setData((prev) => ({
-			...prev,
-			[e.target.name]: e.target.value,
-		}));
 	};
 
 	return (
@@ -119,7 +109,7 @@ export const AddNewProduct = () => {
 								return { value: query, label: query };
 							}}
 							onChange={(e) => {
-								setData((prev) => ({
+								setProductData((prev) => ({
 									...prev,
 									category: e,
 								}));
@@ -139,7 +129,7 @@ export const AddNewProduct = () => {
 								return { value: query, label: query };
 							}}
 							onChange={(e) => {
-								setData((prev) => ({
+								setProductData((prev) => ({
 									...prev,
 									variants: e,
 								}));
@@ -213,3 +203,5 @@ export const AddNewProduct = () => {
 		</div>
 	);
 };
+
+export default AddNewProduct;

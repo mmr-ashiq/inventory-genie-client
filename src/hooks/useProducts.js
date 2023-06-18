@@ -4,6 +4,7 @@ import {
 	getSingleProductApi,
 	getTopSixProductsApi,
 	yearlySellReportApi,
+	createProductApi,
 } from '../apis/product.apis';
 
 export const useGetProducts = () => {
@@ -34,6 +35,15 @@ export const useGetSingleProduct = (id) => {
 
 			return { product };
 		},
+	});
+};
+
+export const useAddProduct = () => {
+	return useQuery(['addProduct'], createProductApi, {
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
+		retry: 1,
+		staleTime: 1000 * 60 * 60 * 24,
 	});
 };
 

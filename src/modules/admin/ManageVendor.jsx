@@ -106,7 +106,7 @@ export default function ManageVendor() {
 									{index + 1}
 								</td>
 								<td className="px-4 py-3 text-left text-sm font-medium">
-									{vendor.firstName}
+									{vendor.agentName}
 								</td>
 								<td className="px-4 py-3 text-left text-sm font-medium">
 									{vendor.email}

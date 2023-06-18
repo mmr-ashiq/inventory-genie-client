@@ -6,11 +6,11 @@ import {
 	AiOutlineArrowDown,
 	AiOutlineDelete,
 	AiOutlineEdit,
-	AiOutlinePlusCircle
+	AiOutlinePlusCircle,
 } from 'react-icons/ai';
 import { useCart } from '../../context/products.context';
 import { useGetProducts } from '../../hooks/useProducts';
-import { AddNewProduct } from '../product/AddNewProduct';
+import AddNewProduct from '../product/AddNewProduct';
 import { EditProduct } from '../product/EditProduct';
 
 export default function Example() {
@@ -25,10 +25,11 @@ export default function Example() {
 	] = useDisclosure(false);
 
 	const products = data?.products || [];
-	const itemsPerPage = 2; // Number of items to show per page
+	const itemsPerPage = 5; // Number of items to show per page
 	const totalPages = Math.ceil(products.length / itemsPerPage);
 
 	const [currentPage, setCurrentPage] = useState(1);
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const handlePreviousPage = () => {
 		setCurrentPage((prevPage) => prevPage - 1);
@@ -40,7 +41,12 @@ export default function Example() {
 
 	const productSliceStart = (currentPage - 1) * itemsPerPage;
 	const productSliceEnd = currentPage * itemsPerPage;
-	const displayedProducts = products.slice(
+
+	const filteredProducts = products.filter((product) =>
+		product.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
+	const displayedProducts = filteredProducts.slice(
 		productSliceStart,
 		productSliceEnd
 	);
@@ -55,7 +61,7 @@ export default function Example() {
 
 	const getFirstFiveWords = (text) => {
 		const words = text.trim().split(/\s+/);
-		return words.slice(0, 5).join(' ');
+		return words.slice(0, 3).join(' ');
 	};
 
 	const getWordCount = (text) => {
@@ -68,10 +74,9 @@ export default function Example() {
 		return getWordCount(product.description) > 5;
 	};
 
-	const [searchQuery, setSearchQuery] = useState('');
-
 	const handleSearchInputChange = (event) => {
 		setSearchQuery(event.target.value);
+		setCurrentPage(1); // Reset current page when search query changes
 	};
 
 	const isDescriptionExpanded = (productId) => {
@@ -100,7 +105,7 @@ export default function Example() {
 			<div className="flex justify-end mt-2">
 				<input
 					type="text"
-					placeholder="Search..."
+					placeholder="Search Product"
 					value={searchQuery}
 					onChange={handleSearchInputChange}
 					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"

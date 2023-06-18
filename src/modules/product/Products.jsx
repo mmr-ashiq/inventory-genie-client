@@ -100,14 +100,14 @@ export default function Example() {
 											<span>
 												{product.description.slice(
 													0,
-													20
+													5
 												)}
 												{expandedDescriptions.includes(
 													product.id
 												)
 													? ' ' +
 													  product.description.slice(
-															20
+															5
 													  )
 													: '...'}
 											</span>
