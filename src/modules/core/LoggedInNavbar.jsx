@@ -55,6 +55,11 @@ const LoggedInNavbar = () => {
 		return classes.filter(Boolean).join(' ');
 	}
 
+	const dashboardLink =
+		data?.userData?.role === 'admin'
+			? '/admin-dashboard'
+			: '/manager-dashboard';
+
 	return (
 		<div className="relative h-12">
 			<div className="flex items-center justify-between h-full px-4 bg-gradient-to-r from-teal-500 via-blue-200 to-blue-400">
@@ -192,7 +197,7 @@ const LoggedInNavbar = () => {
 										}`}
 									>
 										<Link
-											to="/dashboard"
+											to={dashboardLink}
 											className={`${
 												activeLink === '/dashboard'
 													? 'font-medium'
@@ -244,7 +249,7 @@ const LoggedInNavbar = () => {
 										}`}
 									>
 										<Link
-											to="/dashboard"
+											to={dashboardLink}
 											className={`${
 												activeLink === '/dashboard'
 													? 'font-medium'

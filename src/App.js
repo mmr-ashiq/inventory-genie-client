@@ -29,6 +29,7 @@ import SignIn from './modules/core/SignIn';
 import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
 import UserProfile from './modules/core/UserProfile';
+import AdminDashboard from './modules/admin/AdminDashboard';
 import ManageAdmin from './modules/manager/ManageAdmin';
 import { EditProduct } from './modules/product/EditProduct';
 import Products from './modules/product/Products';
@@ -86,6 +87,7 @@ export default function App() {
 							path="/edit-product/:id"
 							element={<EditProduct />}
 						/>
+						<Route path="/admin-dashboard" element={<AdminDashboard />} />
 						<Route path="/solutions" element={<Solutions />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

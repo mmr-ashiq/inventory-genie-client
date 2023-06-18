@@ -1,5 +1,6 @@
 import { useState } from 'react';
-
+import { Modal } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import {
 	AiFillShopping,
 	AiOutlineArrowDown,
@@ -10,9 +11,6 @@ import {
 } from 'react-icons/ai';
 
 import { useGetProducts } from '../../hooks/useProducts';
-
-import { Modal } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { useCart } from '../../context/products.context';
 import { EditProduct } from './EditProduct';
 
