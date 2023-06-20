@@ -1,15 +1,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { logoutApi } from '../../apis/auth.apis';
-import { useIsLoggedIn } from '../../hooks/useIsLoggedIn';
-
-import { Menu, Transition } from '@headlessui/react';
-import { AiOutlineCloseCircle, AiOutlineDown } from 'react-icons/ai';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { RiBugLine } from 'react-icons/ri';
 import { VscAccount } from 'react-icons/vsc';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+import { logoutApi } from '../../apis/auth.apis';
+import { useIsLoggedIn } from '../../hooks/useIsLoggedIn';
 
 const LoggedInNavbar = () => {
 	const queryClient = useQueryClient();
@@ -70,94 +71,11 @@ const LoggedInNavbar = () => {
 					<GiHamburgerMenu className="h-10 ml-auto text-3xl text-white " />
 				</div>
 
-				<div>
-					<div className="flex items-center">
-						<Menu as="div" className="relative z-50 ml-3">
-							<div>
-								<Menu.Button className="flex items-center max-w-xs text-sm">
-									<VscAccount className="h-10 ml-auto text-2xl text-grey-700" />
-									<span className="hidden ml-3 overflow-hidden text-sm font-semibold text-gray-700 overflow-ellipsis lg:block">
-										<span className="sr-only">
-											Open user menu for{' '}
-										</span>
-										{data.userData?.name}
-									</span>
-									<AiOutlineDown
-										className="flex-shrink-0 hidden ml-1 text-sm font-bold text-gray-600 lg:block"
-										aria-hidden="true"
-									/>
-								</Menu.Button>
-							</div>
-							<Transition
-								enter="transition ease-out duration-100"
-								enterFrom="transform opacity-0 scale-95"
-								enterTo="transform opacity-100 scale-100"
-								leave="transition ease-in duration-75"
-								leaveFrom="transform opacity-100 scale-100"
-								leaveTo="transform opacity-0 scale-95"
-							>
-								<Menu.Items className="absolute right-0 z-50 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-									<Menu.Item>
-										{({ active }) => (
-											<Link
-												to="/user-profile"
-												className={classNames(
-													active ? 'bg-gray-100' : '',
-													'block px-4 py-2 text-sm text-gray-700'
-												)}
-											>
-												Your Profile
-											</Link>
-										)}
-									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<Link
-												to="/settings-route"
-												className={classNames(
-													active ? 'bg-gray-100' : '',
-													'block px-4 py-2 text-sm text-gray-700'
-												)}
-											>
-												Settings
-											</Link>
-										)}
-									</Menu.Item>
-									<Menu.Item>
-										{({ active }) => (
-											<button
-												className={classNames(
-													active ? 'bg-gray-100' : '',
-													'block px-4 py-2 text-sm text-gray-700'
-												)}
-												onClick={async () => {
-													logOutToast();
-													await logoutApi();
-													await queryClient.invalidateQueries(
-														{
-															queryKey:
-																'isLoggedIn',
-														}
-													);
-													navigate('/login'); // Navigate to the login page
-												}}
-											>
-												Logout
-												<FiLogOut className="inline-block w-4 h-4 ml-1 text-gray-700" />
-											</button>
-										)}
-									</Menu.Item>
-								</Menu.Items>
-							</Transition>
-						</Menu>
-					</div>
-
-					{isOpen && (
-						<div
-							className="fixed inset-0 z-10 transition-opacity duration-300 bg-black opacity-50"
-							onClick={closeSidebar}
-						></div>
-					)}
+				<div className="flex items-center">
+					<VscAccount className="h-10 ml-auto text-2xl text-grey-700" />
+					<span className="hidden ml-3 overflow-hidden font-semibold text-gray-700 overflow-ellipsis lg:block">
+						{data.userData?.name}
+					</span>
 				</div>
 
 				<div
@@ -185,14 +103,15 @@ const LoggedInNavbar = () => {
 							</span>
 						</button>
 					</div>
-					<div className="px-4 pt-3">
-						<ul className="flex flex-col space-y-4">
+
+					<div className="px-4 pt-3 flex-grow">
+						<ul className="flex flex-col space-y-4 flex-grow">
 							{data?.userData?.role === 'manager' && (
 								<>
 									<li
 										className={`text-white ${
 											activeLink === '/dashboard'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -210,7 +129,9 @@ const LoggedInNavbar = () => {
 												setActiveLink('/dashboard')
 											}
 										>
-											Dashboard
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Dashboard
+											</div>
 										</Link>
 									</li>
 									<li
@@ -234,7 +155,9 @@ const LoggedInNavbar = () => {
 												setActiveLink('/manage-admin')
 											}
 										>
-											Manage-Admin
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Manage Admin
+											</div>
 										</Link>
 									</li>
 								</>
@@ -244,7 +167,7 @@ const LoggedInNavbar = () => {
 									<li
 										className={`text-white ${
 											activeLink === '/dashboard'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -262,14 +185,16 @@ const LoggedInNavbar = () => {
 												setActiveLink('/dashboard')
 											}
 										>
-											Dashboard
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Dashboard
+											</div>
 										</Link>
 									</li>
 
 									<li
 										className={`text-white ${
 											activeLink === '/manage-inventory'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -292,14 +217,16 @@ const LoggedInNavbar = () => {
 												)
 											}
 										>
-											Manage Inventory
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Manage Inventory
+											</div>
 										</Link>
 									</li>
 
 									<li
 										className={`text-white ${
 											activeLink === '/manage-customer'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -322,14 +249,16 @@ const LoggedInNavbar = () => {
 												)
 											}
 										>
-											Manage Customers
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Manage Customers
+											</div>
 										</Link>
 									</li>
 
 									<li
 										className={`text-white ${
 											activeLink === '/vendors'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -347,11 +276,75 @@ const LoggedInNavbar = () => {
 												setActiveLink('/vendors')
 											}
 										>
-											Manage Vendors
+											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+												Manage Vendors
+											</div>
 										</Link>
 									</li>
 								</>
 							)}
+
+							<hr />
+							<li className="mt-2 text-white">
+								<Link
+									to="/report-bug"
+									className={`font-medium ${
+										activeLink === '/contact'
+											? 'border border-white rounded-md p-1'
+											: ''
+									}`}
+									onMouseEnter={() =>
+										setActiveLink('/contact')
+									}
+									onMouseLeave={() =>
+										setActiveLink('/contact')
+									}
+								>
+									<div className="flex items-center w-full p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+										<RiBugLine className="mr-2" />
+										Report Bug
+									</div>
+								</Link>
+							</li>
+
+							<li className="mt-2 text-white">
+								<Link
+									to="/report-bug"
+									className={`font-medium ${
+										activeLink === '/Profile'
+											? 'border border-white rounded-md p-1'
+											: ''
+									}`}
+									onMouseEnter={() =>
+										setActiveLink('/Profile')
+									}
+									onMouseLeave={() =>
+										setActiveLink('/Profile')
+									}
+								>
+									<div className="flex items-center w-full p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
+										<CgProfile className="mr-2" />
+										Your Profile
+									</div>
+								</Link>
+							</li>
+
+							<li className="mt-2 text-white">
+								<button
+									className="block w-full px-4 py-2 text-white border border-white rounded-md hover:bg-red-400 hover:text-gray-900"
+									onClick={async () => {
+										logOutToast();
+										await logoutApi();
+										await queryClient.invalidateQueries({
+											queryKey: 'isLoggedIn',
+										});
+										navigate('/login'); // Navigate to the login page
+									}}
+								>
+									Logout
+									<FiLogOut className="inline-block w-4 h-4 ml-1" />
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
