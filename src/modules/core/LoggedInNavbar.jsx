@@ -59,7 +59,7 @@ const LoggedInNavbar = () => {
 	const dashboardLink =
 		data?.userData?.role === 'admin'
 			? '/admin-dashboard'
-			: '/manager-dashboard';
+			: '/dashboard';
 
 	return (
 		<div className="relative h-12">
@@ -104,8 +104,8 @@ const LoggedInNavbar = () => {
 						</button>
 					</div>
 
-					<div className="px-4 pt-3 flex-grow">
-						<ul className="flex flex-col space-y-4 flex-grow">
+					<div className="flex-grow px-4 pt-3">
+						<ul className="flex flex-col flex-grow space-y-4">
 							{data?.userData?.role === 'manager' && (
 								<>
 									<li
@@ -137,7 +137,7 @@ const LoggedInNavbar = () => {
 									<li
 										className={`text-white ${
 											activeLink === '/manage-admin'
-												? 'font-medium border border-white rounded-md p-1'
+												? 'font-medium'
 												: ''
 										}`}
 									>
@@ -164,33 +164,6 @@ const LoggedInNavbar = () => {
 							)}
 							{data?.userData?.role === 'admin' && (
 								<>
-									<li
-										className={`text-white ${
-											activeLink === '/dashboard'
-												? 'font-medium'
-												: ''
-										}`}
-									>
-										<Link
-											to={dashboardLink}
-											className={`${
-												activeLink === '/dashboard'
-													? 'font-medium'
-													: ''
-											}`}
-											onMouseEnter={() =>
-												setActiveLink('/dashboard')
-											}
-											onMouseLeave={() =>
-												setActiveLink('/dashboard')
-											}
-										>
-											<div className="p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">
-												Dashboard
-											</div>
-										</Link>
-									</li>
-
 									<li
 										className={`text-white ${
 											activeLink === '/manage-inventory'
@@ -287,7 +260,7 @@ const LoggedInNavbar = () => {
 							<hr />
 							<li className="mt-2 text-white">
 								<Link
-									to="/report-bug"
+									to="/contact"
 									className={`font-medium ${
 										activeLink === '/contact'
 											? 'border border-white rounded-md p-1'

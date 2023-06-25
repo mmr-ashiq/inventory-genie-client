@@ -22,7 +22,7 @@ export const useGetVendors = () => {
 };
 
 export const useGetSingleVendor = (id) => {
-  return useQuery(['getSingleVendor', id], () => getSingleVendorApi(id), {
+  return useQuery(['vendor', id], () => getSingleVendorApi(id), {
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     retry: 1,

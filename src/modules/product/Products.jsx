@@ -67,7 +67,7 @@ export default function Example() {
 								<AiOutlineArrowDown className="inline-block w-4 h-4 ml-1 text-gray-500 cursor-pointer" />
 							</th>
 							<th className="flex items-center px-6 py-3 text-left">
-								Stock
+								Stocks
 								<AiOutlineFilter className="inline-block w-4 h-4 ml-1 text-gray-500 cursor-pointer" />
 							</th>
 							<th className="px-6 py-3 text-center">Image</th>

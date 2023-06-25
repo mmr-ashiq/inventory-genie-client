@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import { MantineProvider } from '@mantine/core';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,7 +19,6 @@ import ManageCustomer from './modules/admin/ManageCustomer';
 import ManageInventory from './modules/admin/ManageInventory';
 import ManageVendor from './modules/admin/ManageVendor';
 import Footer from './modules/core/Footer';
-import { Home } from './modules/core/Home';
 import HomePage from './modules/core/HomePage';
 import LoggedInFooter from './modules/core/LoggedInFooter';
 import LoggedInNavbar from './modules/core/LoggedInNavbar';
@@ -35,6 +35,17 @@ import Products from './modules/product/Products';
 
 export default function App() {
 	const { data } = useIsLoggedIn();
+	const navigate = useNavigate();
+
+	const handleUnauthorizedAccess = () => {
+		navigate('/login'); // Redirect to login page for unauthorized access
+	};
+
+	const isAdmin = data?.userData?.role === 'admin';
+	const isManager = data?.userData?.role === 'manager';
+
+	console.log(isManager);
+
 	return (
 		<>
 			<CartProvider>
@@ -46,7 +57,63 @@ export default function App() {
 						<Route path="/price" element={<Pricing />} />
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/login" element={<SignIn />} />
-						<Route path="/signup" element={<SignUp />} />
+						{!data?.isLoggedIn && ( // Redirect unauthorized users to login page
+							<Route
+								path="/signup"
+								element={<SignUp />}
+								// Check if user is not logged in and role is not manager
+								caseSensitive={false}
+								element={
+									isManager ? (
+										<SignUp />
+									) : (
+										handleUnauthorizedAccess
+									)
+								}
+							/>
+						)}
+						{!data?.isLoggedIn && ( // Redirect unauthorized users to login page
+							<Route
+								path="/dashboard"
+								element={<Dashboard />}
+								// Check if user is not logged in and role is not manager
+								caseSensitive={false}
+								element={
+									isManager ? (
+										<Dashboard />
+									) : (
+										handleUnauthorizedAccess
+									)
+								}
+							/>
+						)}
+						{isManager && (
+							<Route
+								path="/manage-admin"
+								element={<ManageAdmin />}
+							/>
+						)}
+						{isAdmin && (
+							<Route
+								path="/manage-inventory"
+								element={<ManageInventory />}
+							/>
+						)}
+						{isAdmin && (
+							<Route
+								path="/manage-vendor"
+								element={<ManageVendor />}
+							/>
+						)}
+						{isAdmin && (
+							<Route path="/products" element={<Products />} />
+						)}
+						{isAdmin && (
+							<Route
+								path="/manage-customer"
+								element={<ManageCustomer />}
+							/>
+						)}
 						<Route
 							path="/productDetails"
 							element={<ProductDetails />}
@@ -55,25 +122,9 @@ export default function App() {
 							path="/orderHistory"
 							element={<OrderHistory />}
 						/>
-						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
-						<Route
-							path="/manage-inventory"
-							element={<ManageInventory />}
-						/>
-						<Route
-							path="/manage-customer"
-							element={<ManageCustomer />}
-						/>
-						<Route path="/manage-admin" element={<ManageAdmin />} />
-						<Route
-							path="/manage-vendor"
-							element={<ManageVendor />}
-						/>
-						<Route path="/products" element={<Products />} />
-						<Route path="/home" element={<Home />} />
 						<Route
 							path="/user-profile/"
 							element={<UserProfile />}

@@ -15,42 +15,90 @@ const AddNewProduct = ({ onClose }) => {
 		price: '',
 		category: [],
 		variants: [],
-		discount: '',
+		discount: 0,
 		company: '',
 		images: [],
+		stock: 1,
 	});
 
-	const handleChange = (e) => {
+	const handleImageChange = (e) => {
+		const files = e.target.files;
+		const imagesArray = Array.from(files);
 		setProductData((prevData) => ({
 			...prevData,
-			[e.target.name]: e.target.value,
+			images: imagesArray,
+		}));
+	};
+
+	const handleChange = (e) => {
+		let value = e.target.value;
+
+		if (e.target.name === 'discount') {
+			value = Math.max(0, parseInt(value)); // Ensure the discount value is not less than 0
+		}
+
+		if (e.target.name === 'stock') {
+			value = Math.max(1, parseInt(value)); // Ensure the stock value is not less than 1
+		}
+
+		setProductData((prevData) => ({
+			...prevData,
+			[e.target.name]: value,
 		}));
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		// Check if the "Name" field is empty
+		if (productData.name.trim() === '') {
+			// Display an error message or perform necessary validation handling
+			console.log('Name is required');
+			return;
+		}
 
 		try {
-			const response = await createProductApi(productData);
+			const formData = new FormData();
+
+			// Append the product data fields to the formData object
+			formData.append('name', productData.name);
+			formData.append('description', productData.description);
+			formData.append('price', productData.price);
+			formData.append('category', JSON.stringify(productData.category));
+			formData.append('variants', JSON.stringify(productData.variants));
+			formData.append('discount', productData.discount);
+			formData.append('company', productData.company);
+			formData.append('stock', productData.stock);
+
+			// Append each image file to the formData object
+			for (const image of productData.images) {
+				formData.append('images', image);
+			}
+
+			const response = await createProductApi(formData);
 
 			// Display toast message on success
 			toast.success('Product added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 
-			// Close the modal
-			onClose();
-
 			// Update the product table in real-time by re-fetching the products
-			mutate(async (data) => {
+			mutate((data) => {
 				// Make a shallow copy of the data array
 				const newData = [...data];
 
 				// Add the newly created product to the copy
 				newData.push(response.data);
 
+				// Sort the array based on the creation date in descending order
+				newData.sort(
+					(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+				);
+
 				return newData;
 			});
+
+			// Close the modal
+			onClose();
 
 			// Invalidate the query to update the UI
 			queryClient.invalidateQueries('products');
@@ -93,6 +141,7 @@ const AddNewProduct = ({ onClose }) => {
 							type="number"
 							name="price"
 							onChange={handleChange}
+							min="1" // Minimum value is 1
 							className="w-full px-2 py-1 border border-gray-300 rounded"
 						/>
 					</div>
@@ -143,6 +192,7 @@ const AddNewProduct = ({ onClose }) => {
 							type="number"
 							name="discount"
 							onChange={handleChange}
+							min="0" // Minimum value is 0
 							className="w-full px-2 py-1 border border-gray-300 rounded"
 						/>
 					</div>
@@ -157,13 +207,13 @@ const AddNewProduct = ({ onClose }) => {
 						/>
 					</div>
 
-					{/* make a div for stocks */}
 					<div className="mb-3">
-						<label htmlFor="stocks">Stocks</label>
+						<label htmlFor="stock">Stocks</label>
 						<input
 							type="number"
-							name="stocks"
+							name="stock"
 							onChange={handleChange}
+							min="1" // Minimum value is 1
 							className="w-full px-2 py-1 border border-gray-300 rounded"
 						/>
 					</div>
@@ -180,7 +230,7 @@ const AddNewProduct = ({ onClose }) => {
 							name="images"
 							multiple
 							accept="image/*"
-							onChange={handleChange}
+							onChange={handleImageChange} // Use the handleImageChange function to handle image uploads
 							className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
 						/>
 						<p className="text-xs text-gray-500">
@@ -193,7 +243,7 @@ const AddNewProduct = ({ onClose }) => {
 					<div>
 						<Button
 							type="submit"
-							className="px-4 mt-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+							className="px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline"
 						>
 							Save
 						</Button>

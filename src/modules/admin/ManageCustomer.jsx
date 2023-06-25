@@ -45,7 +45,7 @@ export default function Example() {
 	const handleSearchInputChange = (event) => {
 		setSearchQuery(event.target.value);
 	};
-	
+
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 
@@ -68,25 +68,27 @@ export default function Example() {
 
 	return (
 		<div className="container mx-auto">
-			<div className="flex justify-start mt-2">
-				<button
-					className="flex items-center px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
-					onClick={() => {
-						addNewCustomerOpen();
-					}}
-				>
-					<AiOutlinePlusCircle size={20} className="mr-2" />
-					Add Customer
-				</button>
-			</div>
+			<div className="flex mt-2">
+				<div className="flex justify-start mt-2">
+					<button
+						className="flex items-center px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+						onClick={() => {
+							addNewCustomerOpen();
+						}}
+					>
+						<AiOutlinePlusCircle size={20} className="mr-2" />
+						Add Customer
+					</button>
+				</div>
 
-			<div className="flex justify-end mt-2">
+				<div className="flex-grow"></div>
+
 				<input
 					type="text"
-					placeholder="Search..."
+					placeholder="Search Customer..."
 					value={searchQuery}
 					onChange={handleSearchInputChange}
-					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+					className="justify-end px-4 py-2 mt-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
 				/>
 				<button
 					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
@@ -172,7 +174,7 @@ export default function Example() {
 				{totalPages > 1 && (
 					<div className="flex items-center justify-center py-4">
 						<button
-							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
 							disabled={currentPage === 1}
 							onClick={handlePreviousPage}
 						>
@@ -182,7 +184,7 @@ export default function Example() {
 							Page {currentPage} of {totalPages}
 						</div>
 						<button
-							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
 							disabled={currentPage === totalPages}
 							onClick={handleNextPage}
 						>

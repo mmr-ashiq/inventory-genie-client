@@ -33,7 +33,7 @@ export default function Example() {
 
 	// Filter out the out-of-stock products
 	const outOfStockCount = products.filter(
-		(product) => !product.inStock
+		(product) => product.stock === 0
 	).length;
 
 	// Calculate the total number of categories
@@ -67,42 +67,12 @@ export default function Example() {
 		productSliceEnd
 	);
 
-	const toggleDescription = (productId) => {
-		setExpandedDescriptions((prevState) =>
-			prevState.includes(productId)
-				? prevState.filter((id) => id !== productId)
-				: [...prevState, productId]
-		);
-	};
-
-	const getFirstFiveWords = (text) => {
-		const words = text.trim().split(/\s+/);
-		return words.slice(0, 3).join(' ');
-	};
-
-	const getWordCount = (text) => {
-		const words = text.trim().split(/\s+/);
-		return words.length;
-	};
-
-	const shouldShowMoreButton = (productId) => {
-		const product = products.find((product) => product.id === productId);
-		return getWordCount(product.description) > 5;
-	};
-
 	const handleSearchInputChange = (event) => {
 		setSearchQuery(event.target.value);
 		setCurrentPage(1); // Reset current page when search query changes
 	};
 
-	const isDescriptionExpanded = (productId) => {
-		return expandedDescriptions.includes(productId);
-	};
-
-	const [expandedDescriptions, setExpandedDescriptions] = useState([]);
-
 	if (error) return <div>Failed to load</div>;
-	console.log(data);
 
 	return (
 		<>
@@ -146,7 +116,7 @@ export default function Example() {
 
 			<div className="container mx-auto mt-4">
 				<div className="flex mt-2">
-					<div className="flex justify-start mt-2">
+					<div className="flex justify-start">
 						<button
 							className="flex items-center px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
 							onClick={() => {
@@ -165,7 +135,7 @@ export default function Example() {
 						placeholder="Search Product"
 						value={searchQuery}
 						onChange={handleSearchInputChange}
-						className="px-4 py-2 justify-end ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+						className="justify-end px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
 					/>
 					<button
 						className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
@@ -229,29 +199,7 @@ export default function Example() {
 											{product.name}
 										</td>
 										<td className="px-6 py-3 text-left">
-											{isDescriptionExpanded(product.id)
-												? product.description
-												: getFirstFiveWords(
-														product.description
-												  )}
-											{shouldShowMoreButton(
-												product.id
-											) && (
-												<button
-													className="text-sm font-light text-blue-500 hover:text-blue-700"
-													onClick={() =>
-														toggleDescription(
-															product.id
-														)
-													}
-												>
-													{isDescriptionExpanded(
-														product.id
-													)
-														? 'Show less'
-														: '...Show more'}
-												</button>
-											)}
+											{product.description}
 										</td>
 										<td className="px-6 py-3 text-left">
 											৳{product.price.toFixed(2)}
