@@ -1,4 +1,4 @@
-import { Chart } from 'chart.js';
+import Chart from 'chart.js/auto';
 import React, { useEffect, useRef } from 'react';
 import { BarChart } from './BarChart';
 import { Pie2 } from './Pie2';
@@ -7,10 +7,20 @@ import { YearlySellReportChart } from './YearlySellReportChart';
 
 const Dashboard = () => {
 	const chartRef = useRef(null);
-	let chartInstance = null;
 
 	useEffect(() => {
-		const chartCanvas = chartRef.current.getContext('2d');
+		const chartCanvas = chartRef.current;
+
+		if (!chartCanvas) {
+			return;
+		}
+
+		const chartContext = chartCanvas.getContext('2d');
+
+		if (!chartContext) {
+			return;
+		}
+
 		const data = {
 			labels: [],
 			datasets: [
@@ -28,13 +38,7 @@ const Dashboard = () => {
 			],
 		};
 
-		if (chartInstance) {
-			// Destroy the existing chart instance if it exists
-			chartInstance.destroy();
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		chartInstance = new Chart(chartCanvas, {
+		const chartInstance = new Chart(chartContext, {
 			type: 'doughnut',
 			data: data,
 			options: {
@@ -42,11 +46,8 @@ const Dashboard = () => {
 			},
 		});
 
-		// Clean up by destroying the chart when the component unmounts
 		return () => {
-			if (chartInstance) {
-				chartInstance.destroy();
-			}
+			chartInstance.destroy();
 		};
 	}, []);
 
@@ -99,7 +100,7 @@ const Dashboard = () => {
 				<div className="w-full sm:w-auto sm:max-w-md">
 					<div className="border border-gray-300 rounded">
 						<h2 className="px-4 py-2 font-semibold text-center bg-slate-200">
-							Expense vs Income
+							Total Quantity Sold
 						</h2>
 						<div className="p-6">
 							<BarChart />

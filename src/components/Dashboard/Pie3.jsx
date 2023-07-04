@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { Chart } from 'chart.js';
+import { useEffect, useRef } from 'react';
 
 export const Pie3 = () => {
 	const chartRef = useRef(null);

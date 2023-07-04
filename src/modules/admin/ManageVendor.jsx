@@ -56,32 +56,34 @@ export default function ManageVendor() {
 	const paginatedVendors = vendors.slice(startIndex, endIndex);
 
 	return (
-		<div className="container mx-auto">
-			<div className="flex justify-start mt-2">
-				<button
-					className="flex items-center px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
-					onClick={openAddModal}
-				>
-					<AiOutlinePlusCircle size={20} className="mr-2" />
-					Add Vendor
-				</button>
-			</div>
+		<div className="container mx-auto mt-4">
+			<div className="flex mt-2">
+					<div className="flex justify-start">
+						<button
+							className="flex items-center px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+							onClick={openAddModal}
+						>
+							<AiOutlinePlusCircle size={20} className="mr-2" />
+							Add Vendor
+						</button>
+					</div>
 
-			<div className="flex justify-end mt-2">
-				<input
-					type="text"
-					placeholder="Search..."
-					value={searchQuery}
-					onChange={handleSearchInputChange}
-					className="px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
-				/>
-				<button
-					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
-					onClick={() => setSearchQuery('')}
-				>
-					Clear
-				</button>
-			</div>
+					<div className="flex-grow"></div>
+
+					<input
+						type="text"
+						placeholder="Search Vendor"
+						value={searchQuery}
+						onChange={handleSearchInputChange}
+						className="justify-end px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+					/>
+					<button
+						className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+						onClick={() => setSearchQuery('')}
+					>
+						Clear
+					</button>
+				</div>
 
 			<div className="my-6 bg-white rounded shadow-md">
 				<table className="w-full table-auto">

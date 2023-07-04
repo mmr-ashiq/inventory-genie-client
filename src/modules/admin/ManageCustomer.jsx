@@ -67,7 +67,7 @@ export default function Example() {
 	};
 
 	return (
-		<div className="container mx-auto">
+		<div className="container mx-auto mt-4">
 			<div className="flex mt-2">
 				<div className="flex justify-start mt-2">
 					<button
@@ -88,7 +88,7 @@ export default function Example() {
 					placeholder="Search Customer..."
 					value={searchQuery}
 					onChange={handleSearchInputChange}
-					className="justify-end px-4 py-2 mt-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+					className="ustify-end px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
 				/>
 				<button
 					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"

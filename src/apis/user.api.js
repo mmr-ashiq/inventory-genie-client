@@ -1,6 +1,6 @@
 import { API_CLIENT } from './axios';
 
-export const adminRegistrationApi = async (registraionData) => API_CLIENT.post('/auth/register', registraionData);
-export const platformUsersListApi = async() => API_CLIENT.get('/users');
-export const EditUserApi = async (id, data) => API_CLIENT.put(`/users/${id}`, data);
-export const DeleteUserApi = async (id) => API_CLIENT.delete(`/users/${id}`);
+export const getUsersApi = async () => API_CLIENT.get('/users');
+export const deleteUserApi = async (userId) => API_CLIENT.delete(`/user/${userId}`);
+export const editUserApi = async (userId, userData) => API_CLIENT.put(`/user/${userId}`, userData);
+export const addUserApi = async (userData) => API_CLIENT.post('/user', userData);

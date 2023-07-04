@@ -4,18 +4,14 @@ import React, { useState } from 'react';
 import {
 	AiOutlineDelete,
 	AiOutlineEdit,
-	AiOutlineSearch,
 	AiOutlinePlusCircle,
 } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
-import {
-	useGetUsers,
-	useDeleteUser,
-	useEditUser,
-	useAdminRegistration,
-} from '../../hooks/useUsers';
+import { useDeleteUser, useEditUser, useGetUsers } from '../../hooks/useUsers';
+import AddNewAdmin from './AddNewAdmin';
 
-export default function Example() {
+export default function ManageAdmin() {
 	const [userId, setUserId] = useState(null);
 	const [
 		openedDeleteModal,
@@ -23,20 +19,45 @@ export default function Example() {
 	] = useDisclosure(false);
 	const [openedEditModal, { open: openEditModal, close: closeEditModal }] =
 		useDisclosure(false);
+	const [openedAddModal, { open: openAddModal, close: closeAddModal }] =
+		useDisclosure(false);
 
-	const { data, error, mutate } = useGetUsers();
-	const users = data?.users || [];
+	const {
+		data: usersData,
+		error: usersError,
+		mutate: mutateUsers,
+	} = useGetUsers();
+	const users = usersData?.users || [];
 
-	const editUser = useEditUser();
-	const deleteUser = useDeleteUser();
-	const adminRegistration = useAdminRegistration();
+	const deleteUserMutation = useDeleteUser();
+	const editUserMutation = useEditUser();
+
+	const itemsPerPage = 5;
+	const totalPages = Math.ceil(users.length / itemsPerPage);
+
+	const handlePreviousPage = () => {
+		setCurrentPage((prevPage) => prevPage - 1);
+	};
+
+	const handleNextPage = () => {
+		setCurrentPage((prevPage) => prevPage + 1);
+	};
+
+	const [searchQuery, setSearchQuery] = useState('');
+	const [currentPage, setCurrentPage] = useState(1);
+	const navigate = useNavigate();
+
+	const handleSearchInputChange = (event) => {
+		setSearchQuery(event.target.value);
+		setCurrentPage(1); // Reset current page when search query changes
+	};
 
 	const handleDeleteUser = async (userId) => {
 		try {
-			await deleteUser.mutateAsync(userId);
+			await deleteUserMutation.mutateAsync(userId);
 			closeDeleteModal();
 			// Remove the deleted user from the users list
-			mutate((prevData) => ({
+			mutateUsers((prevData) => ({
 				...prevData,
 				users: prevData.users.filter((user) => user.id !== userId),
 			}));
@@ -45,34 +66,47 @@ export default function Example() {
 		}
 	};
 
-	if (error) {
+	if (usersError) {
 		return <div>Failed to load users</div>;
 	}
 
-	console.log(data?.users); // Added console.log to see the data
+	const filteredUsers = users.filter((user) =>
+		user.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
+	const handleAddProduct = () => {
+		setUserId(null); // Reset the userId
+		openAddModal();
+	};
 
 	return (
-		<div className="container mx-auto">
-			<div className="flex justify-start mt-2">
-				<button className="flex items-center px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300">
-					<AiOutlinePlusCircle size={20} className="mr-2" />
-					Add User
-				</button>
-			</div>
-
-			<div className="flex justify-end mt-2">
-				<div className="relative">
-					<input
-						type="text"
-						placeholder="Search User"
-						className="px-4 py-2 text-gray-700 rounded-md focus:outline-none"
-					/>
-					<div className="absolute top-0 right-0 flex items-center justify-center h-full w-14">
-						<button className="text-gray-500 hover:text-blue-800">
-							<AiOutlineSearch size={25} />
-						</button>
-					</div>
+		<div className="container mx-auto mt-4">
+			<div className="flex mt-2">
+				<div className="flex justify-start">
+					<button
+						className="flex items-center px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+						onClick={handleAddProduct}
+					>
+						<AiOutlinePlusCircle size={20} className="mr-2" />
+						Add an Admin
+					</button>
 				</div>
+
+				<div className="flex-grow"></div>
+
+				<input
+					type="text"
+					placeholder="Search Admin"
+					value={searchQuery}
+					onChange={handleSearchInputChange}
+					className="justify-end px-4 py-2 ml-4 text-gray-600 transition-colors bg-gray-200 rounded-md focus:outline-none"
+				/>
+				<button
+					className="flex items-center px-4 py-2 ml-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
+					onClick={() => setSearchQuery('')}
+				>
+					Clear
+				</button>
 			</div>
 
 			<div className="my-6 bg-white rounded shadow-md">
@@ -88,16 +122,16 @@ export default function Example() {
 						</tr>
 					</thead>
 					<tbody className="text-sm font-light text-gray-600">
-						{users.map((user) => (
+						{filteredUsers.map((user, index) => (
 							<tr
-								key={user.id}
+								key={user._id}
 								className="border-b border-gray-200 hover:bg-gray-100"
 							>
 								<td className="px-6 py-3 text-left whitespace-nowrap">
 									<div className="flex items-center">
 										<div className="ml-4">
 											<div className="text-sm font-medium text-gray-900">
-												{user.id}
+												{index + 1}
 											</div>
 										</div>
 									</div>
@@ -148,6 +182,27 @@ export default function Example() {
 						))}
 					</tbody>
 				</table>
+				{totalPages > 1 && (
+					<div className="flex items-center justify-center py-4">
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === 1}
+							onClick={handlePreviousPage}
+						>
+							Previous
+						</button>
+						<div className="px-4 py-2 text-sm font-medium text-gray-700">
+							Page {currentPage} of {totalPages}
+						</div>
+						<button
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
+							disabled={currentPage === totalPages}
+							onClick={handleNextPage}
+						>
+							Next
+						</button>
+					</div>
+				)}
 			</div>
 
 			<Modal
@@ -185,6 +240,15 @@ export default function Example() {
 				shadow="md"
 			>
 				{/* <EditUser userId={userId} /> */}
+			</Modal>
+
+			<Modal
+				opened={openedAddModal}
+				onClose={closeAddModal}
+				size="md"
+				shadow="md"
+			>
+				<AddNewAdmin />
 			</Modal>
 		</div>
 	);

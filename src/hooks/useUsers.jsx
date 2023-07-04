@@ -1,24 +1,49 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import {
-    adminRegistrationApi,
-    platformUsersListApi,
-    EditUserApi,
-    DeleteUserApi,
-} from '../apis/user.api';
+import { addUserApi, deleteUserApi, editUserApi, getUsersApi } from '../apis/user.api';
 
 export const useGetUsers = () => {
-    return useQuery('users', platformUsersListApi);
-}
+	return useQuery(['users'], getUsersApi, {
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
+		retry: 1,
+		staleTime: 1000 * 60 * 60 * 24,
 
-export const useEditUser = () => {
-    return useMutation(EditUserApi);
-}
+		select: (data) => {
+			const users = data?.data?.data?.users || [];
+			const totalCount = data?.data?.data?.totalCount || 0;
+
+			return { users, totalCount };
+		},
+	});
+};
 
 export const useDeleteUser = () => {
-    return useMutation(DeleteUserApi);
-}
+	const queryClient = useQueryClient();
 
-export const useAdminRegistration = () => {
-    return useMutation(adminRegistrationApi);
-}
+	return useMutation(deleteUserApi, {
+		onSuccess: () => {
+			queryClient.invalidateQueries('users');
+		},
+	});
+};
+
+export const useEditUser = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(editUserApi, {
+		onSuccess: () => {
+			queryClient.invalidateQueries('users');
+		},
+	});
+};
+
+export const useAddUser = () => {
+	const queryClient = useQueryClient();
+
+	return useMutation(addUserApi, {
+		onSuccess: () => {
+			queryClient.invalidateQueries('users');
+		},
+	});
+};
