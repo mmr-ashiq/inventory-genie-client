@@ -33,77 +33,45 @@ import { EditProduct } from './modules/product/EditProduct';
 import Products from './modules/product/Products';
 
 export default function App() {
-	const { data } = useIsLoggedIn();
-	// const navigate = useNavigate();
+  const { data } = useIsLoggedIn();
+  // const navigate = useNavigate();
 
-	const isAdmin = data?.userData?.role === 'admin';
-	// const isManager = data?.userData?.role === 'manager';
+  const isAdmin = data?.userData?.role === 'admin';
+  // const isManager = data?.userData?.role === 'manager';
 
-	return (
-		<>
-			<CartProvider>
-				<MantineProvider withGlobalStyles withNormalizeCSS>
-					{data?.isLoggedIn ? <LoggedInNavbar /> : <Navbar />}
-					<Routes>
-						<Route path="/" element={<HomePage />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/price" element={<Pricing />} />
-						<Route path="/contact" element={<Contact />} />
-						<Route path="/login" element={<SignIn />} />
-						<Route path="/signup" element={<SignUp />} />
-						<Route path="/dashboard" element=<Dashboard /> />
-						<Route path="/manage-admin" element={<ManageAdmin />} />
-						{isAdmin && (
-							<Route
-								path="/manage-inventory"
-								element={<ManageInventory />}
-							/>
-						)}
-						{isAdmin && (
-							<Route
-								path="/manage-vendor"
-								element={<ManageVendor />}
-							/>
-						)}
-						{isAdmin && (
-							<Route path="/products" element={<Products />} />
-						)}
-						{isAdmin && (
-							<Route
-								path="/manage-customer"
-								element={<ManageCustomer />}
-							/>
-						)}
-						<Route
-							path="/productDetails"
-							element={<ProductDetails />}
-						/>
-						<Route
-							path="/orderHistory"
-							element={<OrderHistory />}
-						/>
-						<Route path="/cart" element={<Cart />} />
-						{/* <Route path="/profile" element={<Profile />} /> */}
-						<Route path="/checkout" element={<CheckOut />} />
-						<Route
-							path="/user-profile/"
-							element={<UserProfile />}
-						/>
-						<Route
-							path="/productOverview"
-							element={<ProductOverview />}
-						/>
-						<Route
-							path="/edit-product/:id"
-							element={<EditProduct />}
-						/>
-						<Route path="/solutions" element={<Solutions />} />
-						<Route path="*" element={<NotFound />} />
-					</Routes>
-					{data?.isLoggedIn ? <LoggedInFooter /> : <Footer />}
-				</MantineProvider>
-			</CartProvider>
-			<ToastContainer />
-		</>
-	);
+  return (
+    <>
+      <CartProvider>
+        <MantineProvider withGlobalStyles withNormalizeCSS>
+          {data?.isLoggedIn ? <LoggedInNavbar /> : <Navbar />}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/price" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/manage-admin" element={<ManageAdmin />} />
+            {isAdmin && <Route path="/manage-inventory" element={<ManageInventory />} />}
+            {isAdmin && <Route path="/manage-vendor" element={<ManageVendor />} />}
+            {isAdmin && <Route path="/products" element={<Products />} />}
+            {isAdmin && <Route path="/manage-customer" element={<ManageCustomer />} />}
+            <Route path="/productDetails" element={<ProductDetails />} />
+            <Route path="/orderHistory" element={<OrderHistory />} />
+            <Route path="/cart" element={<Cart />} />
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/user-profile/" element={<UserProfile />} />
+            <Route path="/productOverview" element={<ProductOverview />} />
+            <Route path="/edit-product/:id" element={<EditProduct />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          {data?.isLoggedIn ? <LoggedInFooter /> : <Footer />}
+        </MantineProvider>
+      </CartProvider>
+      <ToastContainer />
+    </>
+  );
 }
