@@ -31,6 +31,7 @@ import UserProfile from './modules/core/UserProfile';
 import ManageAdmin from './modules/manager/ManageAdmin';
 import { EditProduct } from './modules/product/EditProduct';
 import Products from './modules/product/Products';
+import Profile from './components/Profile/Profile';
 
 export default function App() {
   const { data } = useIsLoggedIn();
@@ -60,7 +61,7 @@ export default function App() {
             <Route path="/productDetails" element={<ProductDetails />} />
             <Route path="/orderHistory" element={<OrderHistory />} />
             <Route path="/cart" element={<Cart />} />
-            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/profile" element={<Profile />} />
             <Route path="/checkout" element={<CheckOut />} />
             <Route path="/user-profile/" element={<UserProfile />} />
             <Route path="/productOverview" element={<ProductOverview />} />
