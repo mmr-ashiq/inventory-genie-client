@@ -282,17 +282,17 @@ const LoggedInNavbar = () => {
 
 							<li className="mt-2 text-white">
 								<Link
-									to="/report-bug"
+									to="/profile"
 									className={`font-medium ${
-										activeLink === '/Profile'
+										activeLink === '/profile'
 											? 'border border-white rounded-md p-1'
 											: ''
 									}`}
 									onMouseEnter={() =>
-										setActiveLink('/Profile')
+										setActiveLink('/profile')
 									}
 									onMouseLeave={() =>
-										setActiveLink('/Profile')
+										setActiveLink('/profile')
 									}
 								>
 									<div className="flex items-center w-full p-1 px-4 py-2 text-white border border-white rounded-md text-md hover:bg-gray-100 hover:text-gray-900">

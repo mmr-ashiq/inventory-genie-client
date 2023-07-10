@@ -90,7 +90,8 @@ export default function ManageVendor() {
 					<thead>
 						<tr className="text-sm leading-normal text-gray-600 uppercase bg-gray-200">
 							<th className="px-4 py-3 text-left">ID</th>
-							<th className="px-4 py-3 text-left">First Name</th>
+							<th className="px-4 py-3 text-left">Agent Name</th>
+							{/* <th className="px-4 py-3 text-left">Company</th> */}
 							<th className="px-4 py-3 text-left">Email</th>
 							<th className="px-4 py-3 text-left">Phone</th>
 							<th className="px-4 py-3 text-left">Action</th>
@@ -104,16 +105,19 @@ export default function ManageVendor() {
 								key={vendor.id}
 								className="border-b border-gray-200 hover:bg-gray-100"
 							>
-								<td className="px-4 py-3 text-left text-sm font-medium">
+								<td className="px-4 py-3 text-sm font-medium text-left">
 									{index + 1}
 								</td>
-								<td className="px-4 py-3 text-left text-sm font-medium">
+								<td className="px-4 py-3 text-sm font-medium text-left">
 									{vendor.agentName}
 								</td>
-								<td className="px-4 py-3 text-left text-sm font-medium">
+								{/* <td className="px-4 py-3 text-sm font-medium text-left">
+									{vendor.company}
+								</td> */}
+								<td className="px-4 py-3 text-sm font-medium text-left">
 									{vendor.email}
 								</td>
-								<td className="px-4 py-3 text-left text-sm font-medium">
+								<td className="px-4 py-3 text-sm font-medium text-left">
 									{vendor.phone}
 								</td>
 								<td className="px-4 py-3 text-left">
@@ -147,7 +151,7 @@ export default function ManageVendor() {
 				{totalPages > 1 && (
 					<div className="flex items-center justify-center py-4">
 						<button
-							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
 							disabled={currentPage === 1}
 							onClick={handlePreviousPage}
 						>
@@ -157,7 +161,7 @@ export default function ManageVendor() {
 							Page {currentPage} of {totalPages}
 						</div>
 						<button
-							className="px-4 py-2 text-sm font-medium text-gray-700 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none"
+							className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none"
 							disabled={currentPage === totalPages}
 							onClick={handleNextPage}
 						>

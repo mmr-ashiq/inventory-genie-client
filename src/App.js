@@ -7,11 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cart from '../src/components/Cart';
 import CheckOut from '../src/components/CheckOut';
 import OrderHistory from '../src/components/OrderHistory';
+import Profile from '../src/components/Profile/Profile';
 import About from '../src/modules/core/About';
 import Contact from '../src/modules/core/Contact';
 import Pricing from '../src/modules/core/Pricing';
 import Dashboard from './components/Dashboard/Dashboard';
-import ProductDetails from './components/ProductDetails';
 import ProductOverview from './components/ProductOverview';
 import { CartProvider } from './context/products.context';
 import { useIsLoggedIn } from './hooks/useIsLoggedIn';
@@ -27,7 +27,6 @@ import NotFound from './modules/core/NotFound';
 import SignIn from './modules/core/SignIn';
 import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
-import UserProfile from './modules/core/UserProfile';
 import ManageAdmin from './modules/manager/ManageAdmin';
 import { EditProduct } from './modules/product/EditProduct';
 import Products from './modules/product/Products';
@@ -75,20 +74,12 @@ export default function App() {
 							/>
 						)}
 						<Route
-							path="/productDetails"
-							element={<ProductDetails />}
-						/>
-						<Route
 							path="/orderHistory"
 							element={<OrderHistory />}
 						/>
 						<Route path="/cart" element={<Cart />} />
-						{/* <Route path="/profile" element={<Profile />} /> */}
+						<Route path="/profile" element={<Profile />} />
 						<Route path="/checkout" element={<CheckOut />} />
-						<Route
-							path="/user-profile/"
-							element={<UserProfile />}
-						/>
 						<Route
 							path="/productOverview"
 							element={<ProductOverview />}

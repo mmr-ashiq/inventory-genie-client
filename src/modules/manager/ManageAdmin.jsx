@@ -55,12 +55,12 @@ export default function ManageAdmin() {
 	const handleDeleteUser = async (userId) => {
 		try {
 			await deleteUserMutation.mutateAsync(userId);
-			closeDeleteModal();
 			// Remove the deleted user from the users list
 			mutateUsers((prevData) => ({
 				...prevData,
 				users: prevData.users.filter((user) => user.id !== userId),
 			}));
+			closeDeleteModal(); // Close the modal after successful deletion
 		} catch (error) {
 			console.log(error);
 		}
@@ -170,7 +170,7 @@ export default function ManageAdmin() {
 										<button
 											className="text-red-600 hover:text-red-900"
 											onClick={() => {
-												setUserId(user.id);
+												setUserId(user._id);
 												openDeleteModal();
 											}}
 										>
