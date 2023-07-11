@@ -1,6 +1,7 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useState } from 'react';
 import {
   AiFillShopping,
   AiOutlineAppstoreAdd,
@@ -19,11 +20,12 @@ import { EditProduct } from '../product/EditProduct';
 import ProductDetailsModal from '../product/ProductDetailsModal';
 
 export default function Example() {
+  const [cartItems, setCartItems] = useState([]);
   const [productId, setProductId] = useState(null);
   const [opened, { open, close }] = useDisclosure(false);
-  const { addToCart, cart } = useCart();
+  const { addToCart, cart, removeFromCart } = useCart();
   const { data, error } = useGetProducts();
-
+  const navigate = useNavigate();
   const [addNewProductOpened, { open: addNewProductOpen, close: addNewProductClose }] = useDisclosure(false);
   const [productDetailsModal, { open: productDetailsModalOpen, close: productDetailsModalClose }] = useDisclosure(false);
 
@@ -99,7 +101,7 @@ export default function Example() {
       </div>
 
       <div className="container mx-auto mt-4">
-        <div className="flex mt-2">
+        <div className="flex items-center mt-2">
           <div className="flex justify-start">
             <button
               className="flex items-center px-4 py-2 text-gray-600 transition-colors bg-gray-200 rounded-md hover:bg-gray-300"
@@ -114,6 +116,12 @@ export default function Example() {
 
           <div className="flex-grow"></div>
 
+          <div
+            onClick={() => navigate('/cart')}
+            className="ml-auto cursor-pointer flex items-center gap-3 rounded-lg bg-gray-200 px-5 py-[9px] h-full"
+          >
+            <span>{cart?.length < 1 ? 'No items in cart' : cart?.length}</span> <AiFillShopping size={25} />
+          </div>
           <input
             type="text"
             placeholder="Search Product"
@@ -205,6 +213,14 @@ export default function Example() {
                           <button
                             className="flex items-center px-4 py-2 ml-4 text-green-500 transition-colors bg-gray-200 rounded-md hover:text-green-700"
                             onClick={() => addToCart(product)}
+                          >
+                            <AiFillShopping size={25} />
+                          </button>
+                        )}
+                        {cart.find((item) => item._id === product._id) && (
+                          <button
+                            className="flex items-center px-4 py-2 ml-4 text-yellow-500 transition-colors bg-gray-200 rounded-md hover:text-green-700"
+                            onClick={() => removeFromCart(product._id)}
                           >
                             <AiFillShopping size={25} />
                           </button>
