@@ -36,7 +36,7 @@ export default function App() {
 	// const navigate = useNavigate();
 
 	const isAdmin = data?.userData?.role === 'admin';
-	// const isManager = data?.userData?.role === 'manager';
+	const isManager = data?.userData?.role === 'manager';
 
 	return (
 		<>
@@ -50,8 +50,15 @@ export default function App() {
 						<Route path="/contact" element={<Contact />} />
 						<Route path="/login" element={<SignIn />} />
 						<Route path="/signup" element={<SignUp />} />
-						<Route path="/dashboard" element=<Dashboard /> />
-						<Route path="/manage-admin" element={<ManageAdmin />} />
+						{isManager && (
+							<Route path="/dashboard" element={<Dashboard />} />
+						)}
+						{isManager && (
+							<Route
+								path="/manage-admin"
+								element={<ManageAdmin />}
+							/>
+						)}
 						{isAdmin && (
 							<Route
 								path="/manage-inventory"
