@@ -17,3 +17,6 @@ export const getTopSixProductsApi = async (month) => {
 };
 
 export const yearlySellReportApi = async () => API_CLIENT.get(`/sell-report`);
+
+export const sellProductsApi = async (data) =>
+	API_CLIENT.post('/product-sells', data);

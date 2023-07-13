@@ -1,6 +1,7 @@
 import { API_CLIENT } from './axios';
 
-export const getCustomersApi = async () => API_CLIENT.get('/customers');
+export const getCustomersApi = async (value) =>
+	API_CLIENT.get(`/customers?value=${value}`);
 
 export const getSingleCustomerApi = async (id) =>
 	API_CLIENT.get(`/customers/${id}/single`);

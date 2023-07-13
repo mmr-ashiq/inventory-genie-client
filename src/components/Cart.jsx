@@ -2,237 +2,32 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCart } from '../context/products.context';
-
-const navigation = {
-	categories: [
-		{
-			id: 'women',
-			name: 'Women',
-			featured: [
-				{
-					name: 'New Arrivals',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
-					imageAlt:
-						'Models sitting back to back, wearing Basic Tee in black and bone.',
-				},
-				{
-					name: 'Basic Tees',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
-					imageAlt:
-						'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
-				},
-				{
-					name: 'Accessories',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg',
-					imageAlt:
-						'Model wearing minimalist watch with black wristband and white watch face.',
-				},
-			],
-			sections: [
-				[
-					{
-						id: 'shoes',
-						name: 'Shoes & Accessories',
-						items: [
-							{ name: 'Sneakers', href: '#' },
-							{ name: 'Boots', href: '#' },
-							{ name: 'Flats', href: '#' },
-							{ name: 'Sandals', href: '#' },
-							{ name: 'Heels', href: '#' },
-							{ name: 'Socks', href: '#' },
-						],
-					},
-					{
-						id: 'collection',
-						name: 'Shop Collection',
-						items: [
-							{ name: 'Everything', href: '#' },
-							{ name: 'Core', href: '#' },
-							{ name: 'New Arrivals', href: '#' },
-							{ name: 'Sale', href: '#' },
-							{ name: 'Accessories', href: '#' },
-						],
-					},
-				],
-				[
-					{
-						id: 'clothing',
-						name: 'All Clothing',
-						items: [
-							{ name: 'Basic Tees', href: '#' },
-							{ name: 'Artwork Tees', href: '#' },
-							{ name: 'Tops', href: '#' },
-							{ name: 'Bottoms', href: '#' },
-							{ name: 'Swimwear', href: '#' },
-							{ name: 'Underwear', href: '#' },
-						],
-					},
-					{
-						id: 'accessories',
-						name: 'All Accessories',
-						items: [
-							{ name: 'Watches', href: '#' },
-							{ name: 'Wallets', href: '#' },
-							{ name: 'Bags', href: '#' },
-							{ name: 'Sunglasses', href: '#' },
-							{ name: 'Hats', href: '#' },
-							{ name: 'Belts', href: '#' },
-						],
-					},
-				],
-				[
-					{
-						id: 'brands',
-						name: 'Brands',
-						items: [
-							{ name: 'Full Nelson', href: '#' },
-							{ name: 'My Way', href: '#' },
-							{ name: 'Re-Arranged', href: '#' },
-							{ name: 'Counterfeit', href: '#' },
-							{ name: 'Significant Other', href: '#' },
-						],
-					},
-				],
-			],
-		},
-		{
-			id: 'men',
-			name: 'Men',
-			featured: [
-				{
-					name: 'Accessories',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/home-page-03-category-01.jpg',
-					imageAlt:
-						'Wooden shelf with gray and olive drab green baseball caps, next to wooden clothes hanger with sweaters.',
-				},
-				{
-					name: 'New Arrivals',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-					imageAlt:
-						'Drawstring top with elastic loop closure and textured interior padding.',
-				},
-				{
-					name: 'Artwork Tees',
-					href: '#',
-					imageSrc:
-						'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-					imageAlt:
-						'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-				},
-			],
-			sections: [
-				[
-					{
-						id: 'shoes',
-						name: 'Shoes & Accessories',
-						items: [
-							{ name: 'Sneakers', href: '#' },
-							{ name: 'Boots', href: '#' },
-							{ name: 'Sandals', href: '#' },
-							{ name: 'Socks', href: '#' },
-						],
-					},
-					{
-						id: 'collection',
-						name: 'Shop Collection',
-						items: [
-							{ name: 'Everything', href: '#' },
-							{ name: 'Core', href: '#' },
-							{ name: 'New Arrivals', href: '#' },
-							{ name: 'Sale', href: '#' },
-						],
-					},
-				],
-				[
-					{
-						id: 'clothing',
-						name: 'All Clothing',
-						items: [
-							{ name: 'Basic Tees', href: '#' },
-							{ name: 'Artwork Tees', href: '#' },
-							{ name: 'Pants', href: '#' },
-							{ name: 'Hoodies', href: '#' },
-							{ name: 'Swimsuits', href: '#' },
-						],
-					},
-					{
-						id: 'accessories',
-						name: 'All Accessories',
-						items: [
-							{ name: 'Watches', href: '#' },
-							{ name: 'Wallets', href: '#' },
-							{ name: 'Bags', href: '#' },
-							{ name: 'Sunglasses', href: '#' },
-							{ name: 'Hats', href: '#' },
-							{ name: 'Belts', href: '#' },
-						],
-					},
-				],
-				[
-					{
-						id: 'brands',
-						name: 'Brands',
-						items: [
-							{ name: 'Re-Arranged', href: '#' },
-							{ name: 'Counterfeit', href: '#' },
-							{ name: 'Full Nelson', href: '#' },
-							{ name: 'My Way', href: '#' },
-						],
-					},
-				],
-			],
-		},
-	],
-	pages: [
-		{ name: 'Company', href: '#' },
-		{ name: 'Stores', href: '#' },
-	],
-};
-const products = [
-	{
-		id: 1,
-		name: 'Nomad Tumbler',
-		href: '#',
-		price: '$35.00',
-		color: 'White',
-		inStock: true,
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-		imageAlt: 'Insulated bottle with white base and black snap lid.',
-	},
-	{
-		id: 2,
-		name: 'Basic Tee',
-		href: '#',
-		price: '$32.00',
-		color: 'Sienna',
-		inStock: true,
-		size: 'Large',
-		imageSrc:
-			'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-		imageAlt: "Front of men's Basic Tee in sienna.",
-	},
-	// More products...
-];
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
+import { CustomerDetails } from './CustomerDetails';
 
 export default function Example() {
 	const [open, setOpen] = useState(false);
 	const { cart, removeAllWithId, setNewCart } = useCart();
 	const navigate = useNavigate();
+	const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+	const totalAmount = (
+		cart.reduce((acc, product) => {
+			if (product?.quantity) {
+				return acc + product.quantity * product.price;
+			} else {
+				return acc + product.price;
+			}
+		}, 0) +
+		100 +
+		cart.reduce((acc, product) => {
+			if (product?.quantity) {
+				return acc + product.quantity * product.price;
+			} else {
+				return acc + product.price;
+			}
+		}, 0) *
+			0.02
+	).toFixed(2);
 
 	const handleQuantityChange = (id, quantity) => {
 		const newCart = cart.map((product) => {
@@ -261,8 +56,8 @@ export default function Example() {
 	return (
 		<div className="bg-white">
 			<main>
-				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					<div className="mx-auto max-w-4xl pt-16">
+				<div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+					<div className="max-w-4xl pt-16 mx-auto">
 						<h1 className="text-3xl font-bold tracking-tight text-gray-900">
 							Shopping Cart
 						</h1>
@@ -275,7 +70,7 @@ export default function Example() {
 
 								<ul
 									role="list"
-									className="divide-y divide-gray-200 border-t border-b border-gray-200"
+									className="border-t border-b border-gray-200 divide-y divide-gray-200"
 								>
 									{cart.map((product, productIdx) => (
 										<li
@@ -287,7 +82,7 @@ export default function Example() {
 													<img
 														src={product.images[0]}
 														alt={product.name}
-														className="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32"
+														className="object-cover object-center w-24 h-24 rounded-lg sm:h-32 sm:w-32"
 													/>
 												)}
 												{product.images.length ===
@@ -295,12 +90,12 @@ export default function Example() {
 													<img
 														src="https://picsum.photos/200/300"
 														alt="No image"
-														className="h-24 w-24 rounded-lg object-cover object-center sm:h-32 sm:w-32"
+														className="object-cover object-center w-24 h-24 rounded-lg sm:h-32 sm:w-32"
 													/>
 												)}
 											</div>
 
-											<div className="relative ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+											<div className="relative flex flex-col justify-between flex-1 ml-4 sm:ml-6">
 												<div>
 													<div className="flex justify-between sm:grid sm:grid-cols-2">
 														<div className="pr-6">
@@ -318,7 +113,7 @@ export default function Example() {
 															</h3>
 														</div>
 
-														<p className="text-right text-sm font-medium text-gray-900">
+														<p className="text-sm font-medium text-right text-gray-900">
 															{product?.quantity
 																? product?.quantity *
 																  product?.price
@@ -326,7 +121,7 @@ export default function Example() {
 														</p>
 													</div>
 
-													<div className="mt-4 flex items-center sm:absolute sm:top-0 sm:left-1/2 sm:mt-0 sm:block">
+													<div className="flex items-center mt-4 sm:absolute sm:top-0 sm:left-1/2 sm:mt-0 sm:block">
 														<label
 															htmlFor={`quantity-${productIdx}`}
 															className="sr-only"
@@ -365,20 +160,6 @@ export default function Example() {
 																}}
 															/>
 														</div>
-														{/* <select
-                              id={`quantity-${productIdx}`}
-                              name={`quantity-${productIdx}`}
-                              className="block max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
-                            >
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={4}>4</option>
-                              <option value={5}>5</option>
-                              <option value={6}>6</option>
-                              <option value={7}>7</option>
-                              <option value={8}>8</option>
-                            </select> */}
 
 														<button
 															type="button"
@@ -396,38 +177,25 @@ export default function Example() {
 														</button>
 													</div>
 												</div>
-
-												{/* <p className="mt-4 flex space-x-2 text-sm text-gray-700">
-                          {product.inStock ? (
-                            <CheckIcon
-                              className="h-5 w-5 flex-shrink-0 text-green-500"
-                              aria-hidden="true"
-                            />
-                          ) : (
-                            <ClockIcon
-                              className="h-5 w-5 flex-shrink-0 text-gray-300"
-                              aria-hidden="true"
-                            />
-                          )} */}
-
-												{/* <span>
-                            {product.inStock
-                              ? "In stock"
-                              : `Ships in ${product.leadTime}`}
-                          </span> */}
-												{/* </p> */}
 											</div>
 										</li>
 									))}
 								</ul>
 							</section>
 
+							{/* customer details  */}
+							<CustomerDetails
+								selectedCustomer={selectedCustomer}
+								setSelectedCustomer={setSelectedCustomer}
+								totalAmount={totalAmount}
+							/>
+
 							{/* Order summary */}
 							<section
 								aria-labelledby="summary-heading"
 								className="mt-10 sm:ml-32 sm:pl-6"
 							>
-								<div className="rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:p-8">
+								<div className="px-4 py-6 rounded-lg bg-gray-50 sm:p-6 lg:p-8">
 									<h2
 										id="summary-heading"
 										className="sr-only"
@@ -436,7 +204,7 @@ export default function Example() {
 									</h2>
 
 									<div className="flow-root">
-										<dl className="-my-4 divide-y divide-gray-200 text-sm">
+										<dl className="-my-4 text-sm divide-y divide-gray-200">
 											<div className="flex items-center justify-between py-4">
 												<dt className="text-gray-600">
 													Subtotal
@@ -551,6 +319,15 @@ export default function Example() {
 													).toFixed(2)}
 												</dd>
 											</div>
+											<div className="flex items-center justify-between py-4">
+												<dt className="text-base font-medium text-gray-900">
+													Customer
+												</dt>
+												<dd className="text-base font-medium text-gray-900">
+													{selectedCustomer?.name ||
+														'No customer selected'}
+												</dd>
+											</div>
 										</dl>
 									</div>
 								</div>
@@ -558,18 +335,18 @@ export default function Example() {
 									<button
 										onClick={handlePayNow}
 										type="button"
-										className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+										className="w-full px-4 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
 									>
 										Pay Now
 									</button>
 								</div>
 
-								<div className="mt-6 mb-4 text-center text-sm text-gray-500">
+								<div className="mt-6 mb-4 text-sm text-center text-gray-500">
 									<p>
 										or&nbsp;
 										<span
 											onClick={handleContinueShopping}
-											className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500"
+											className="font-medium text-indigo-600 cursor-pointer hover:text-indigo-500"
 										>
 											Continue Shopping
 											<span aria-hidden="true">

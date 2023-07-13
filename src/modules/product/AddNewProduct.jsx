@@ -3,10 +3,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { createProductApi } from '../../apis/product.apis';
-import { useGetProducts } from '../../hooks/useProducts';
+// import { useGetProducts } from '../../hooks/useProducts';
 
 const AddNewProduct = ({ closeModal }) => {
-	const { mutate } = useGetProducts();
+	//   const { mutate } = useGetProducts();
 	const queryClient = useQueryClient();
 
 	const [productData, setProductData] = useState({

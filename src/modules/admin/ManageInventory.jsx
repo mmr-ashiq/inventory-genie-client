@@ -20,7 +20,7 @@ import { EditProduct } from '../product/EditProduct';
 import ProductDetailsModal from '../product/ProductDetailsModal';
 
 export default function Example() {
-	const [cartItems, setCartItems] = useState([]);
+	//   const [cartItems, setCartItems] = useState([]);
 	const [productId, setProductId] = useState(null);
 	const [opened, { open, close }] = useDisclosure(false);
 	const { addToCart, cart, removeFromCart } = useCart();
@@ -44,9 +44,9 @@ export default function Example() {
 	).length;
 
 	// Calculate the total number of categories
-	const categoriesCount = [
-		...new Set(products.map((product) => product.category)),
-	].length;
+	//   const categoriesCount = [
+	//     ...new Set(products.map((product) => product.category))
+	//   ].length;
 
 	const itemsPerPage = 5; // Number of items to show per page
 	const totalPages = Math.ceil(products.length / itemsPerPage);
@@ -139,12 +139,7 @@ export default function Example() {
 
 					<div
 						onClick={() => navigate('/cart')}
-						className={`ml-auto cursor-pointer flex items-center gap-3 rounded-lg bg-gray-200 px-5 py-[9px] h-full`}
-						disabled={cart?.length < 1}
-						style={{
-							pointerEvents: cart?.length < 1 ? 'none' : 'auto',
-							opacity: cart?.length < 1 ? 0.5 : 1,
-						}}
+						className="ml-auto cursor-pointer flex items-center gap-3 rounded-lg bg-gray-200 px-5 py-[9px] h-full"
 					>
 						<span>
 							{cart?.length < 1
@@ -153,7 +148,6 @@ export default function Example() {
 						</span>{' '}
 						<AiFillShopping size={25} />
 					</div>
-
 					<input
 						type="text"
 						placeholder="Search Product"
