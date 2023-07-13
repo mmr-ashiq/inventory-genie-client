@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { createProductApi } from '../../apis/product.apis';
 import { useGetProducts } from '../../hooks/useProducts';
 
-const AddNewProduct = ({ onClose }) => {
+const AddNewProduct = ({ closeModal }) => {
 	const { mutate } = useGetProducts();
 	const queryClient = useQueryClient();
 
@@ -74,34 +74,34 @@ const AddNewProduct = ({ onClose }) => {
 				formData.append('images', image);
 			}
 
-			const response = await createProductApi(formData);
+			await createProductApi(formData);
 
 			// Display toast message on success
 			toast.success('Product added successfully!', {
 				position: toast.POSITION.TOP_RIGHT,
 			});
 
-			// Update the product table in real-time by re-fetching the products
-			mutate((data) => {
-				// Make a shallow copy of the data array
-				const newData = [...data];
+			// // Update the product table in real-time by re-fetching the products
+			// mutate((data) => {
+			// 	// Make a shallow copy of the data array
+			// 	const newData = [...data];
 
-				// Add the newly created product to the copy
-				newData.push(response.data);
+			// 	// Add the newly created product to the copy
+			// 	newData.push(response.data);
 
-				// Sort the array based on the creation date in descending order
-				newData.sort(
-					(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-				);
+			// 	// Sort the array based on the creation date in descending order
+			// 	newData.sort(
+			// 		(a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+			// 	);
 
-				return newData;
-			});
-
-			// Close the modal
-			onClose();
+			// 	return newData;
+			// });
 
 			// Invalidate the query to update the UI
 			queryClient.invalidateQueries('products');
+
+			// Close the modal
+			closeModal();
 		} catch (error) {
 			console.log(error);
 		}

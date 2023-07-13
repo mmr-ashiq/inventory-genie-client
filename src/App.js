@@ -29,7 +29,6 @@ import SignUp from './modules/core/SignUp';
 import Solutions from './modules/core/Solutions';
 import ManageAdmin from './modules/manager/ManageAdmin';
 import { EditProduct } from './modules/product/EditProduct';
-import Products from './modules/product/Products';
 
 export default function App() {
 	const { data } = useIsLoggedIn();
@@ -70,9 +69,6 @@ export default function App() {
 								path="/manage-vendor"
 								element={<ManageVendor />}
 							/>
-						)}
-						{isAdmin && (
-							<Route path="/products" element={<Products />} />
 						)}
 						{isAdmin && (
 							<Route

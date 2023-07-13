@@ -2,13 +2,13 @@ import { Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import {
-  AiFillShopping,
-  AiOutlineAppstoreAdd,
-  AiOutlineArrowDown,
-  AiOutlineCloseCircle,
-  AiOutlineDelete,
-  AiOutlineEdit,
-  AiOutlinePlusCircle,
+	AiFillShopping,
+	AiOutlineAppstoreAdd,
+	AiOutlineArrowDown,
+	AiOutlineCloseCircle,
+	AiOutlineDelete,
+	AiOutlineEdit,
+	AiOutlinePlusCircle,
 } from 'react-icons/ai';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
@@ -139,7 +139,12 @@ export default function Example() {
 
 					<div
 						onClick={() => navigate('/cart')}
-						className="ml-auto cursor-pointer flex items-center gap-3 rounded-lg bg-gray-200 px-5 py-[9px] h-full"
+						className={`ml-auto cursor-pointer flex items-center gap-3 rounded-lg bg-gray-200 px-5 py-[9px] h-full`}
+						disabled={cart?.length < 1}
+						style={{
+							pointerEvents: cart?.length < 1 ? 'none' : 'auto',
+							opacity: cart?.length < 1 ? 0.5 : 1,
+						}}
 					>
 						<span>
 							{cart?.length < 1
@@ -148,6 +153,7 @@ export default function Example() {
 						</span>{' '}
 						<AiFillShopping size={25} />
 					</div>
+
 					<input
 						type="text"
 						placeholder="Search Product"
@@ -214,7 +220,7 @@ export default function Example() {
 											</label>
 										</td>
 										<td
-											className="px-6 py-3 text-left cursor-pointer font-medium hover:underline"
+											className="px-6 py-3 font-medium text-left cursor-pointer hover:underline"
 											onClick={() => {
 												setProductId(product?._id);
 												productDetailsModalOpen();
@@ -338,7 +344,7 @@ export default function Example() {
 						opened={addNewProductOpened}
 						onClose={addNewProductClose}
 					>
-						<AddNewProduct />
+						<AddNewProduct closeModal={addNewProductClose} />
 					</Modal>
 					<Modal
 						opened={productDetailsModal}
