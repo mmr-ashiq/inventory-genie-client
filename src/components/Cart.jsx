@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCart } from '../context/products.context';
-import { CustomerDetails } from './CustomerDetails';
+import CustomerDetails from './CustomerDetails';
 
 export default function Example() {
 	const [open, setOpen] = useState(false);

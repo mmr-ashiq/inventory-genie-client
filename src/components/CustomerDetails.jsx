@@ -1,20 +1,16 @@
-import { useState, useRef } from 'react';
-import { getCustomersApi } from '../apis/customer.apis';
-import { styled } from 'styled-components';
-import { Button } from '@mantine/core';
-import { useCart } from '../context/products.context';
+import { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { getCustomersApi } from '../apis/customer.apis';
 import { sellProductsApi } from '../apis/product.apis';
-import { useQueryClient } from '@tanstack/react-query';
+import { useCart } from '../context/products.context';
 
-export const CustomerDetails = ({
+const CustomerDetails = ({
 	setSelectedCustomer,
 	totalAmount,
 	selectedCustomer,
 }) => {
-	const queryClient = useQueryClient();
 	const [customers, setCustomers] = useState([]);
-	const [paidPrice, setPaidPrice] = useState(0);
+	const [paidFullAmount, setPaidFullAmount] = useState(false);
 
 	const { cart } = useCart();
 
@@ -22,18 +18,18 @@ export const CustomerDetails = ({
 	const checkboxRef = useRef();
 
 	const handleSearch = async (e) => {
-		const customers = await getCustomersApi(e.target.value);
-
-		if (customers?.data?.data?.customers?.length) {
-			console.log(customers.data.data);
-
+		const searchQuery = e.target.value;
+		try {
+			const customers = await getCustomersApi(searchQuery);
 			setCustomers(customers.data.data.customers);
+		} catch (error) {
+			console.log('Error fetching customers:', error);
 		}
 	};
 
 	const handlePay = async () => {
 		if (!selectedCustomer?._id) {
-			toast.error('Customer id is required');
+			toast.error('Customer ID is required');
 			return;
 		}
 
@@ -43,33 +39,27 @@ export const CustomerDetails = ({
 		}
 
 		const data = {
-			customerId: selectedCustomer?._id,
-			paidPrice: checkboxRef.current.checked ? totalAmount : paidPrice,
+			customerId: selectedCustomer._id,
+			paidPrice: paidFullAmount ? totalAmount : 0,
 			products: cart.map((item) => ({
 				productId: item._id,
 				quantity: item.quantity || 1,
 			})),
 		};
 
-		console.log(data);
-
 		try {
 			await sellProductsApi(data);
-
-			// do something after success
-			toast.success('Product sold successfully');
-
-			queryClient.invalidateQueries('products');
+			toast.success('Products sold successfully');
 		} catch (error) {
-			console.log(error);
-
-			if (error?.response?.data?.message) {
-				toast.error(error?.response?.data?.message);
-			}
+			console.error('Error selling products:', error);
+			toast.error('Failed to sell products');
 		}
 	};
 
-	console.log(cart);
+	const handleCheckboxChange = () => {
+		setPaidFullAmount(checkboxRef.current.checked);
+	};
+
 	return (
 		<div>
 			<input
@@ -78,62 +68,60 @@ export const CustomerDetails = ({
 				placeholder="Search Customer"
 				onChange={handleSearch}
 				ref={inputRef}
+				className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
 			/>
 
-			<Customers>
+			<div className="overflow-y-scroll max-h-48">
 				{customers?.map((customer) => (
 					<div
 						key={customer._id}
 						onClick={() => {
 							setSelectedCustomer(customer);
-
 							setCustomers([]);
 							inputRef.current.value = '';
 						}}
+						className="px-4 py-2 border-b border-gray-300 cursor-pointer hover:bg-gray-100"
 					>
 						<p>{customer.name}</p>
 					</div>
 				))}
-			</Customers>
+			</div>
 
-			<div>
-				<div>
-					<p>Total Amount</p>
-					<p>{totalAmount || 0}</p>
+			<div className="mt-4">
+				<div className="flex items-center justify-between mb-2">
+					<p className="font-bold">Total Amount</p>
+					<p>{totalAmount || 0} &#2547;</p>
 				</div>
 
-				<div>
-					<p>paid price</p>
-					<p>
-						<input
-							type="number"
-							onChange={(e) => {
-								setPaidPrice(e.target.value);
-							}}
-						/>
-					</p>
+				<div className="flex items-center justify-between mb-2">
+					<p className="font-bold">Paid Price</p>
+					<input
+						type="number"
+						value={paidFullAmount ? totalAmount : ''}
+						onChange={(e) => setPaidFullAmount(e.target.value)}
+						className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+					/>
+				</div>
 
-					<div>
-						<input type="checkbox" ref={checkboxRef} />
-						<label>paid full amount</label>
-					</div>
+				<div className="flex items-center">
+					<input
+						type="checkbox"
+						ref={checkboxRef}
+						className="mr-2"
+						onChange={handleCheckboxChange}
+					/>
+					<label>Paid Full Amount</label>
 				</div>
 			</div>
 
-			<Button variant="primary" onClick={handlePay} className="bg-blue">
-				pay
-			</Button>
+			<button
+				onClick={handlePay}
+				className="w-full px-4 py-2 mt-4 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+			>
+				Pay
+			</button>
 		</div>
 	);
 };
 
-const Customers = styled.div`
-	max-height: 200px;
-	overflow-y: scroll;
-
-	> div {
-		padding: 10px;
-		border-bottom: 1px solid #ccc;
-		cursor: pointer;
-	}
-`;
+export default CustomerDetails;
