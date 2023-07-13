@@ -20,7 +20,7 @@ import { EditProduct } from '../product/EditProduct';
 import ProductDetailsModal from '../product/ProductDetailsModal';
 
 export default function Example() {
-  const [cartItems, setCartItems] = useState([]);
+  //   const [cartItems, setCartItems] = useState([]);
   const [productId, setProductId] = useState(null);
   const [opened, { open, close }] = useDisclosure(false);
   const { addToCart, cart, removeFromCart } = useCart();
@@ -44,9 +44,9 @@ export default function Example() {
   ).length;
 
   // Calculate the total number of categories
-  const categoriesCount = [
-    ...new Set(products.map((product) => product.category))
-  ].length;
+  //   const categoriesCount = [
+  //     ...new Set(products.map((product) => product.category))
+  //   ].length;
 
   const itemsPerPage = 5; // Number of items to show per page
   const totalPages = Math.ceil(products.length / itemsPerPage);
