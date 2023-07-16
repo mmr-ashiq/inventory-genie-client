@@ -6,6 +6,7 @@ import {
 	updateCustomerApi,
 	addCustomerApi,
 	deleteCustomerApi,
+	getTopSixCustomersApi,
 } from '../apis/customer.apis.js';
 
 export const useGetCustomers = () => {
@@ -49,4 +50,17 @@ export const useAddCustomer = () => {
 
 export const useDeleteCustomer = () => {
 	return useMutation((id) => deleteCustomerApi(id));
+};
+
+export const useGetTopSixCustomers = () => {
+	return useQuery(['getTopSixCustomers'], getTopSixCustomersApi, {
+		refetchOnWindowFocus: false,
+		refetchOnReconnect: false,
+		retry: 1,
+		staleTime: 1000 * 60 * 60 * 24,
+		select: (data) => {
+			const customers = data?.data?.data?.customers || [];
+			return { customers };
+		},
+	});
 };

@@ -14,3 +14,6 @@ export const addCustomerApi = async (data) =>
 
 export const deleteCustomerApi = async (id) =>
 	API_CLIENT.delete(`/customers/${id}`);
+
+export const getTopSixCustomersApi = async () =>
+	API_CLIENT.get('/top-six-customers');

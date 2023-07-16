@@ -31,7 +31,9 @@ export const EditProduct = ({ productId }) => {
 
 	return (
 		<div className="max-w-md p-6 mx-auto my-4 bg-white rounded-md shadow-md">
-			<h1 className="mb-4 text-2xl font-bold text-center">Edit Product</h1>
+			<h1 className="mb-4 text-2xl font-bold text-center">
+				Edit Product
+			</h1>
 
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
@@ -51,6 +53,21 @@ export const EditProduct = ({ productId }) => {
 				</div>
 				<div>
 					<label
+						htmlFor="description"
+						className="block mb-2 font-semibold text-gray-700"
+					>
+						Description
+					</label>
+					<input
+						type="text"
+						name="description"
+						id="description"
+						defaultValue={product.description}
+						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
+					/>
+				</div>
+				<div>
+					<label
 						htmlFor="price"
 						className="block mb-2 font-semibold text-gray-700"
 					>
@@ -64,20 +81,28 @@ export const EditProduct = ({ productId }) => {
 						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
 					/>
 				</div>
+				{/* category */}
 				<div>
 					<label
-						htmlFor="description"
+						htmlFor="category"
 						className="block mb-2 font-semibold text-gray-700"
 					>
-						Description
+						Category
 					</label>
-					<input
-						type="text"
-						name="description"
-						id="description"
-						defaultValue={product.description}
+					<select
+						name="category"
+						id="category"
+						defaultValue={product.category}
 						className="w-full px-3 py-2 leading-tight text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
-					/>
+					>
+						<option value="electronics">Electronics</option>
+						<option value="fashion">Fashion</option>
+						<option value="grocery">Grocery</option>
+						<option value="beauty">Beauty</option>
+						<option value="toys">Toys</option>
+						<option value="sports">Sports</option>
+						<option value="outdoor">Outdoor</option>
+					</select>
 				</div>
 				<div>
 					<label

@@ -30,33 +30,33 @@ export default function ProductDetailsModal({ productId }) {
 						/>
 						<p className="mb-4">
 							<span className="font-bold">Product Name:</span>{' '}
-							{product?.name}
+							{product?._doc?.name}
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">
 								Product Description:
 							</span>{' '}
-							{product?.description}
+							{product?._doc?.description}
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">Category:</span>{' '}
-							<Category data={product?.category} />
+							<Category data={product?._doc?.category} />
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">Price:</span>{' '}
-							{product?.price}
+							{product?._doc?.price}
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">Variants:</span>{' '}
-							<Category data={product?.variants} />
+							<Category data={product?._doc?.variants} />
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">Discount:</span>{' '}
-							{product?.discount}
+							{product?._doc?.discount}
 						</p>
 						<p className="mb-4">
 							<span className="font-bold">Stock:</span>{' '}
-							{product?.stock}
+							{product?._doc?.stock}
 						</p>
 					</div>
 				)}
